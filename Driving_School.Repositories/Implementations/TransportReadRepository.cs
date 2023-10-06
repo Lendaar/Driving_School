@@ -21,6 +21,9 @@ namespace Driving_School.Repositories.Implementations
         Task<Transport?> ITransportReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
             => Task.FromResult(context.Transports.FirstOrDefault(x => x.Id == id));
 
+        Task<List<Transport>> ITransportReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
+            => Task.FromResult(context.Transports.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
+                .OrderBy(x => x.Name)
+                .ToList());
     }
-
 }

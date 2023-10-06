@@ -1,9 +1,9 @@
-﻿namespace Driving_School.Services.Contracts.Models
+﻿namespace Driving_School.Api.Models
 {
     /// <summary>
-    /// Модель площадки
+    /// Модель курса
     /// </summary>
-    public class PlaceModel
+    public class CourseResponse
     {
         /// <summary>
         /// Идентификатор
@@ -11,7 +11,7 @@
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Наименование
+        /// Название
         /// </summary>
         public string Name { get; set; } = string.Empty;
 
@@ -21,8 +21,14 @@
         public string Description { get; set; } = string.Empty;
 
         /// <summary>
-        /// Адрес
+        /// Продолжительность (Академических часов)
         /// </summary>
-        public string Address { get; set; } = string.Empty;
+        public int Duration { get; set; }
+
+        /// <summary>
+        /// Цена за занятие
+        /// </summary>
+        public decimal Price { get; set; }
+
     }
 }

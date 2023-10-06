@@ -20,5 +20,10 @@ namespace Driving_School.Repositories.Implementations
 
         Task<Course?> ICourseReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
             => Task.FromResult(context.Courses.FirstOrDefault(x => x.Id == id));
+
+        Task<List<Course>> ICourseReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
+            => Task.FromResult(context.Courses.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
+                .OrderBy(x => x.Name)
+                .ToList());
     }
 }
