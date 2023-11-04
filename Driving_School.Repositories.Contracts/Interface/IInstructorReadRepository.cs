@@ -20,6 +20,6 @@ namespace Driving_School.Repositories.Contracts.Interface
         /// <summary>
         /// Получить список <see cref="Instructor"/> по идентификаторам
         /// </summary>
-        Task<List<Instructor>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation);
+        Task<Dictionary<Guid, Instructor>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation);
     }
 }

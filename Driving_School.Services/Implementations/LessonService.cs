@@ -35,11 +35,11 @@ namespace Driving_School.Services.Implementations
         async Task<IEnumerable<LessonModel>> ILessonService.GetAllAsync(CancellationToken cancellationToken)
         {
             var lessons = await lessonReadRepository.GetAllAsync(cancellationToken);
-            var transportId = lessons.Select(x => x.TransportId).Distinct().Cast<Guid>();
-            var instructorId = lessons.Select(x => x.InstructorId).Distinct().Cast<Guid>();
-            var studentId = lessons.Select(x => x.StudentId).Distinct().Cast<Guid>();
+            var transportId = lessons.Select(x => x.TransportId).Distinct();
+            var instructorId = lessons.Select(x => x.InstructorId).Distinct();
+            var studentId = lessons.Select(x => x.StudentId).Distinct();
             var courseId = lessons.Select(x => x.CourceId).Distinct();
-            var placeId = lessons.Select(x => x.PlaceId).Distinct().Cast<Guid>();
+            var placeId = lessons.Select(x => x.PlaceId).Distinct();
 
             var transports = await transportReadRepository.GetByIdsAsync(transportId, cancellationToken);
             var instructors = await instructorReadRepository.GetByIdsAsync(instructorId, cancellationToken);
@@ -50,28 +50,19 @@ namespace Driving_School.Services.Implementations
             var listLessonModel = new List<LessonModel>();
             foreach (var lessonItem in lessons)
             {
-                
-                var transport = transports.FirstOrDefault(x => x.Id == lessonItem.TransportId);
-                var instructor = instructors.FirstOrDefault(x => x.Id == lessonItem.InstructorId);
-                var student = students.FirstOrDefault(x => x.Id == lessonItem.StudentId);
-                //var course = courses.FirstOrDefault(x => x.Id == lessonItem.CourceId);
+                if (!transports.TryGetValue(lessonItem.PlaceId, out var transport)) continue;
+                if (!instructors.TryGetValue(lessonItem.PlaceId, out var instructor)) continue;
+                if (!students.TryGetValue(lessonItem.PlaceId, out var student)) continue;
                 if (!courses.TryGetValue(lessonItem.CourceId, out var course)) continue;
-                var place = places.FirstOrDefault(x => x.Id == lessonItem.PlaceId);
+                if (!places.TryGetValue(lessonItem.PlaceId, out var place)) continue;
 
                 var lessonTable = mapper.Map<LessonModel>(lessonItem);
-                //var lessonItemTransport = mapper.Map<LessonModel>(transport);
-                //var lessonItemInstructor = mapper.Map<LessonModel>(instructor);
-                //var lessonItemStudent = mapper.Map<LessonModel>(student);
-                //var lessonTableCource = mapper.Map<LessonModel>(course);
-                //var lessonTablePlace = mapper.Map<LessonModel>(place);
 
-
-
-                lessonTable.Transport = lessonItemTransport.Transport;
-                lessonTable.Instructor = lessonItemInstructor.Instructor;
-                lessonTable.Student = lessonItemStudent.Student;
+                lessonTable.Transport = mapper.Map<TransportModel>(transport);
+                lessonTable.Instructor = mapper.Map<InstructorModel>(instructor);
+                lessonTable.Student = mapper.Map<StudentModel>(student);
                 lessonTable.Course = mapper.Map<CourseModel>(course);
-                lessonTable.Place = lessonTableCource.Place;
+                lessonTable.Place = mapper.Map<PlaceModel>(place);
                 listLessonModel.Add(lessonTable);
             }
 
@@ -92,17 +83,12 @@ namespace Driving_School.Services.Implementations
             var place = await placeReadRepository.GetByIdAsync(item.PlaceId, cancellationToken);
 
             var lesson = mapper.Map<LessonModel>(item);
-            var lessonTransport = mapper.Map<LessonModel>(transport);
-            var lessonInstructort = mapper.Map<LessonModel>(instructor);
-            var lessonStudent = mapper.Map<LessonModel>(student);
-            var lessonCource = mapper.Map<LessonModel>(course);
-            var lessonPlace = mapper.Map<LessonModel>(place);
 
-            lesson.Transport = lessonTransport.Transport;
-            lesson.Student = lessonStudent.Student;
-            lesson.Place = lessonPlace.Place;
-            lesson.Course = lessonCource.Course;
-            lesson.Instructor = lessonInstructort.Instructor;
+            lesson.Transport = mapper.Map<TransportModel>(transport);
+            lesson.Student = mapper.Map<StudentModel>(student);
+            lesson.Place = mapper.Map<PlaceModel>(place);
+            lesson.Course = mapper.Map<CourseModel>(course);
+            lesson.Instructor = mapper.Map<InstructorModel>(instructor);
             return lesson;
         }
     }
