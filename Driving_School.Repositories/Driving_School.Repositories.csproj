@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Driving_School.Common\Driving_School.Common.csproj" />
     <ProjectReference Include="..\Driving_School.Context.Contracts\Driving_School.Context.Contracts.csproj" />
     <ProjectReference Include="..\Driving_School.Repositories.Contracts\Driving_School.Repositories.Contracts.csproj" />
