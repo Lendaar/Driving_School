@@ -1,9 +1,9 @@
-﻿namespace Driving_School.Services.Contracts.Models
+﻿namespace Driving_School.Api.Models
 {
     /// <summary>
     /// Модель занятия
     /// </summary>
-    public class LessonModel
+    public class LessonResponse
     {
         /// <summary>
         /// Идентификатор
@@ -21,28 +21,28 @@
         public DateTimeOffset EndDate { get; set; }
 
         /// <summary>
-        /// Идентификатор площадки
+        /// Наименование площадки
         /// </summary>
-        public PlaceModel? Place { get; set; }
+        public string PlaceName { get; set; } = string.Empty;
 
         /// <summary>
-        /// Идентификатор обучающегося
+        /// ФИО обучающегося
         /// </summary>
-        public StudentModel? Student { get; set; }
+        public string StudentName { get; set; } = string.Empty;
 
         /// <summary>
         /// Инструктор
         /// </summary>
-        public InstructorModel? Instructor { get; set; }
+        public string InstructorName { get; set; } = string.Empty;
 
         /// <summary>
         /// Транспорт
         /// </summary>
-        public TransportModel? Transport { get; set; }
+        public string TransportName { get; set; } = string.Empty;
 
         /// <summary>
         /// Курс
         /// </summary>
-        public CourseModel? Course { get; set; }
+        public string CourseName { get; set; } = string.Empty;
     }
 }

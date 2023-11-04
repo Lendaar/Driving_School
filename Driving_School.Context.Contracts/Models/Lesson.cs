@@ -26,6 +26,11 @@
         public Guid StudentId { get; set; }
 
         /// <summary>
+        /// Идентификатор транспорта
+        /// </summary>
+        public Guid TransportId { get; set; }
+
+        /// <summary>
         /// Инструктор
         /// </summary>
         public Guid InstructorId { get; set; }

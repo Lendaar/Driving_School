@@ -1,10 +1,15 @@
-﻿namespace Driving_School.Context.Contracts.Models
+﻿namespace Driving_School.Api.Models
 {
     /// <summary>
-    /// Сущность площадки
+    /// Модель площадки
     /// </summary>
-    public class Place : BaseAuditEntity
+    public class PlaceResponse
     {
+        /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Наименование
         /// </summary>

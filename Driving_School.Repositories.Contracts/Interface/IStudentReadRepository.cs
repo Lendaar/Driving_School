@@ -15,5 +15,10 @@ namespace Driving_School.Repositories.Contracts.Interface
         /// Получить <see cref="Student"/> по идентификатору
         /// </summary>
         Task<Student?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Получить список <see cref="Student"/> по идентификаторам
+        /// </summary>
+        Task<Dictionary<Guid, Student>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation);
     }
 }

@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Driving_School.Context\Driving_School.Context.csproj" />
     <ProjectReference Include="..\Driving_School.Repositories\Driving_School.Repositories.csproj" />
     <ProjectReference Include="..\Driving_School.Services\Driving_School.Services.csproj" />

@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Driving_School.Repositories.Contracts\Driving_School.Repositories.Contracts.csproj" />
     <ProjectReference Include="..\Driving_School.Services.Contracts\Driving_School.Services.Contracts.csproj" />
   </ItemGroup>
