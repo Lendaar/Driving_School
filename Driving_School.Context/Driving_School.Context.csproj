@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Driving_School.Common\Driving_School.Common.csproj" />
     <ProjectReference Include="..\Driving_School.Context.Contracts\Driving_School.Context.Contracts.csproj" />
   </ItemGroup>
 
