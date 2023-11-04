@@ -5,26 +5,30 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School", "Driving_School\Driving_School.csproj", "{CED03762-6C27-4B83-BE45-8470F3F6D435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Context", "Driving_School.Context\Driving_School.Context.csproj", "{F02A9C5D-65B4-4DCB-9C91-B75004B3D35A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Context", "Driving_School.Context\Driving_School.Context.csproj", "{F02A9C5D-65B4-4DCB-9C91-B75004B3D35A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7DB4747A-0345-4145-B501-9674B52EDA0C} = {7DB4747A-0345-4145-B501-9674B52EDA0C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Context.Contracts", "Driving_School.Context.Contracts\Driving_School.Context.Contracts.csproj", "{7DB4747A-0345-4145-B501-9674B52EDA0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Context.Contracts", "Driving_School.Context.Contracts\Driving_School.Context.Contracts.csproj", "{7DB4747A-0345-4145-B501-9674B52EDA0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Repositories", "Driving_School.Repositories\Driving_School.Repositories.csproj", "{73BBBF44-E323-4FBD-A40D-82B80AD849E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Repositories", "Driving_School.Repositories\Driving_School.Repositories.csproj", "{73BBBF44-E323-4FBD-A40D-82B80AD849E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Repositories.Contracts", "Driving_School.Repositories.Contracts\Driving_School.Repositories.Contracts.csproj", "{3D7F5460-CE27-435F-8D4B-9B65EF85A641}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Repositories.Contracts", "Driving_School.Repositories.Contracts\Driving_School.Repositories.Contracts.csproj", "{3D7F5460-CE27-435F-8D4B-9B65EF85A641}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Repositories.Tests", "Driving_School.Repositories.Tests\Driving_School.Repositories.Tests.csproj", "{F41C4EDB-03BB-4D4B-9D90-96F455050988}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Repositories.Tests", "Driving_School.Repositories.Tests\Driving_School.Repositories.Tests.csproj", "{F41C4EDB-03BB-4D4B-9D90-96F455050988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Services", "Driving_School.Services\Driving_School.Services.csproj", "{448D5D85-5A73-4706-A0D5-33F7DDB182CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Services", "Driving_School.Services\Driving_School.Services.csproj", "{448D5D85-5A73-4706-A0D5-33F7DDB182CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Services.Tests", "Driving_School.Services.Tests\Driving_School.Services.Tests.csproj", "{00B04A57-C805-4E6B-808C-B46538AA00FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Services.Tests", "Driving_School.Services.Tests\Driving_School.Services.Tests.csproj", "{00B04A57-C805-4E6B-808C-B46538AA00FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Services.Contracts", "Driving_School.Services.Contracts\Driving_School.Services.Contracts.csproj", "{4A1CF2C2-A7D4-448D-AB1C-85E6F97ADCDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Services.Contracts", "Driving_School.Services.Contracts\Driving_School.Services.Contracts.csproj", "{4A1CF2C2-A7D4-448D-AB1C-85E6F97ADCDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Api.Tests", "Driving_School.Api.Tests\Driving_School.Api.Tests.csproj", "{6F9D3116-ECB8-4158-AB61-6559798E98B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Api.Tests", "Driving_School.Api.Tests\Driving_School.Api.Tests.csproj", "{6F9D3116-ECB8-4158-AB61-6559798E98B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Common", "Driving_School.Common\Driving_School.Common.csproj", "{3AAAB838-5044-4934-9ABB-7190AE548655}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driving_School.Shared", "Driving_School.Shared\Driving_School.Shared.csproj", "{5CAA5FFB-A361-4D81-9CED-E2639767BC66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +76,14 @@ Global
 		{6F9D3116-ECB8-4158-AB61-6559798E98B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F9D3116-ECB8-4158-AB61-6559798E98B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F9D3116-ECB8-4158-AB61-6559798E98B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AAAB838-5044-4934-9ABB-7190AE548655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAAB838-5044-4934-9ABB-7190AE548655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAAB838-5044-4934-9ABB-7190AE548655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAAB838-5044-4934-9ABB-7190AE548655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CAA5FFB-A361-4D81-9CED-E2639767BC66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CAA5FFB-A361-4D81-9CED-E2639767BC66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CAA5FFB-A361-4D81-9CED-E2639767BC66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CAA5FFB-A361-4D81-9CED-E2639767BC66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
