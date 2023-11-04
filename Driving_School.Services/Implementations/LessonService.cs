@@ -35,12 +35,11 @@ namespace Driving_School.Services.Implementations
         async Task<IEnumerable<LessonModel>> ILessonService.GetAllAsync(CancellationToken cancellationToken)
         {
             var lessons = await lessonReadRepository.GetAllAsync(cancellationToken);
-            IEnumerable<Guid> transportId, instructorId, studentId, courseId, placeId;
-            transportId = lessons.Select(x => x.TransportId).Distinct().Cast<Guid>();
-            instructorId = lessons.Select(x => x.InstructorId).Distinct().Cast<Guid>();
-            studentId = lessons.Select(x => x.StudentId).Distinct().Cast<Guid>();
-            courseId = lessons.Select(x => x.CourceId).Distinct().Cast<Guid>();
-            placeId = lessons.Select(x => x.PlaceId).Distinct().Cast<Guid>();
+            var transportId = lessons.Select(x => x.TransportId).Distinct().Cast<Guid>();
+            var instructorId = lessons.Select(x => x.InstructorId).Distinct().Cast<Guid>();
+            var studentId = lessons.Select(x => x.StudentId).Distinct().Cast<Guid>();
+            var courseId = lessons.Select(x => x.CourceId).Distinct();
+            var placeId = lessons.Select(x => x.PlaceId).Distinct().Cast<Guid>();
 
             var transports = await transportReadRepository.GetByIdsAsync(transportId, cancellationToken);
             var instructors = await instructorReadRepository.GetByIdsAsync(instructorId, cancellationToken);
@@ -51,23 +50,27 @@ namespace Driving_School.Services.Implementations
             var listLessonModel = new List<LessonModel>();
             foreach (var lessonItem in lessons)
             {
+                
                 var transport = transports.FirstOrDefault(x => x.Id == lessonItem.TransportId);
                 var instructor = instructors.FirstOrDefault(x => x.Id == lessonItem.InstructorId);
                 var student = students.FirstOrDefault(x => x.Id == lessonItem.StudentId);
-                var course = courses.FirstOrDefault(x => x.Id == lessonItem.CourceId);
+                //var course = courses.FirstOrDefault(x => x.Id == lessonItem.CourceId);
+                if (!courses.TryGetValue(lessonItem.CourceId, out var course)) continue;
                 var place = places.FirstOrDefault(x => x.Id == lessonItem.PlaceId);
 
                 var lessonTable = mapper.Map<LessonModel>(lessonItem);
-                var lessonItemTransport = mapper.Map<LessonModel>(transport);
-                var lessonItemInstructor = mapper.Map<LessonModel>(instructor);
-                var lessonItemStudent = mapper.Map<LessonModel>(student);
-                var lessonTableCource = mapper.Map<LessonModel>(course);
-                var lessonTablePlace = mapper.Map<LessonModel>(place);
+                //var lessonItemTransport = mapper.Map<LessonModel>(transport);
+                //var lessonItemInstructor = mapper.Map<LessonModel>(instructor);
+                //var lessonItemStudent = mapper.Map<LessonModel>(student);
+                //var lessonTableCource = mapper.Map<LessonModel>(course);
+                //var lessonTablePlace = mapper.Map<LessonModel>(place);
+
+
 
                 lessonTable.Transport = lessonItemTransport.Transport;
                 lessonTable.Instructor = lessonItemInstructor.Instructor;
                 lessonTable.Student = lessonItemStudent.Student;
-                lessonTable.Course = lessonTableCource.Course;
+                lessonTable.Course = mapper.Map<CourseModel>(course);
                 lessonTable.Place = lessonTableCource.Place;
                 listLessonModel.Add(lessonTable);
             }

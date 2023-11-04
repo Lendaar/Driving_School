@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.Extensions.EnumMapping;
 using Driving_School.Context.Contracts.Models;
 using Driving_School.Services.Contracts.Models;
+using GSBTypes_Contracts = Driving_School.Context.Contracts.Enums.GSBTypes;
+using GSBTypes_Services = Driving_School.Services.Contracts.Enums.GSBTypes;
 
 namespace Driving_School.Services.Automappers
 {
@@ -19,23 +22,13 @@ namespace Driving_School.Services.Automappers
             CreateMap<Course, CourseModel>(MemberList.Destination);
 
             CreateMap<Lesson, LessonModel>(MemberList.Destination)
-                .ForMember(x => x.StartDate, next => next.MapFrom(e => e.StartDate))
-                .ForMember(x => x.EndDate, next => next.MapFrom(e => e.EndDate))
-                .ForMember(x => x.Instructor, next => next.MapFrom(e => new Instructor()))
-                .ForMember(x => x.Place, next => next.MapFrom(e => new Place()))
-                .ForMember(x => x.Student, next => next.MapFrom(e => new Student()))
-                .ForMember(x => x.Transport, next => next.MapFrom(e => new Transport()))
-                .ForMember(x => x.Course, next => next.MapFrom(e => new Course()));
-            CreateMap<Transport, LessonModel>(MemberList.Destination)
-                .ForMember(x => x.Transport, next => next.MapFrom(e => e));
-            CreateMap<Instructor, LessonModel>(MemberList.Destination)
-                .ForMember(x => x.Instructor, next => next.MapFrom(e => e));
-            CreateMap<Place, LessonModel>(MemberList.Destination)
-                .ForMember(x => x.Place, next => next.MapFrom(e => e));
-            CreateMap<Student, LessonModel>(MemberList.Destination)
-                .ForMember(x => x.Student, next => next.MapFrom(e => e));
-            CreateMap<Course, LessonModel>(MemberList.Destination)
-                .ForMember(x => x.Course, next => next.MapFrom(e => e));
+                .ForMember(x => x.Instructor, next => next.Ignore())
+                .ForMember(x => x.Place, next => next.Ignore())
+                .ForMember(x => x.Student, next => next.Ignore())
+                .ForMember(x => x.Transport, next => next.Ignore())
+                .ForMember(x => x.Course, next => next.Ignore());
+
+            CreateMap<GSBTypes_Contracts, GSBTypes_Services>().ConvertUsingEnumMapping(x => x.MapByName()).ReverseMap();
         }
     }
 }
