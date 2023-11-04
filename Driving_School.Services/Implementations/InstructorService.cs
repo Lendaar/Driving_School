@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Driving_School.Repositories.Contracts.Interface;
+using Driving_School.Services.Anchors;
 using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.Models;
 
 namespace Driving_School.Services.Implementations
 {
-    public class InstructorService : IInstructorService
+    public class InstructorService : IInstructorService, IServiceAnchor
     {
         private readonly IInstructorReadRepository instructorReadRepository;
         private readonly IMapper mapper;

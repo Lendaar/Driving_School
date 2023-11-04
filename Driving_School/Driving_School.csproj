@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Driving_School.Common\Driving_School.Common.csproj" />
     <ProjectReference Include="..\Driving_School.Context\Driving_School.Context.csproj" />
     <ProjectReference Include="..\Driving_School.Repositories\Driving_School.Repositories.csproj" />
     <ProjectReference Include="..\Driving_School.Services\Driving_School.Services.csproj" />

@@ -1,10 +1,11 @@
 ﻿using Driving_School.Context.Contracts.Interface;
 using Driving_School.Context.Contracts.Models;
+using Driving_School.Repositories.Anchors;
 using Driving_School.Repositories.Contracts.Interface;
 
 namespace Driving_School.Repositories.Implementations
 {
-    public class TransportReadRepository : ITransportReadRepository
+    public class TransportReadRepository : ITransportReadRepository, IRepositoriesAnchor
     {
         private readonly IDriving_SchoolContext context;
 
