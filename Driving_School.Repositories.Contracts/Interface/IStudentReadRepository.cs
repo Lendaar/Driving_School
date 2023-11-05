@@ -3,22 +3,22 @@
 namespace Driving_School.Repositories.Contracts.Interface
 {
     /// <summary>
-    /// Репозиторий чтения <see cref="Student"/>
+    /// Репозиторий чтения <see cref="Person"/>
     /// </summary>
     public interface IStudentReadRepository
     {
         /// <summary>
-        /// Получить список всех <see cref="Student"/>
+        /// Получить список всех <see cref="Person"/>
         /// </summary>
-        Task<List<Student>> GetAllAsync(CancellationToken cancellationToken);
+        Task<List<Person>> GetAllAsync(CancellationToken cancellationToken);
         /// <summary>
-        /// Получить <see cref="Student"/> по идентификатору
+        /// Получить <see cref="Person"/> по идентификатору
         /// </summary>
-        Task<Student?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<Person?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Получить список <see cref="Student"/> по идентификаторам
+        /// Получить список <see cref="Person"/> по идентификаторам
         /// </summary>
-        Task<Dictionary<Guid, Student>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation);
+        Task<Dictionary<Guid, Person>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation);
     }
 }

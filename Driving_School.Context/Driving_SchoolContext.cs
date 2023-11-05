@@ -8,7 +8,7 @@ namespace Driving_School.Context
         private readonly IList<Instructor> instructors;
         private readonly IList<Lesson> lessons;
         private readonly IList<Place> places;
-        private readonly IList<Student> students;
+        private readonly IList<Person> students;
         private readonly IList<Transport> transports;
         private readonly IList<Course> courses;
 
@@ -17,7 +17,7 @@ namespace Driving_School.Context
             instructors = new List<Instructor>();
             lessons = new List<Lesson>();
             places = new List<Place>();
-            students = new List<Student>();
+            students = new List<Person>();
             transports = new List<Transport>();
             courses = new List<Course>();
         }
@@ -28,7 +28,7 @@ namespace Driving_School.Context
 
         IEnumerable<Place> IDriving_SchoolContext.Places => places;
 
-        IEnumerable<Student> IDriving_SchoolContext.Students => students;
+        IEnumerable<Person> IDriving_SchoolContext.Students => students;
 
         IEnumerable<Transport> IDriving_SchoolContext.Transports => transports;
 

@@ -23,26 +23,26 @@
         /// <summary>
         /// Идентификатор площадки
         /// </summary>
-        public PlaceModel? Place { get; set; }
+        public PlaceModel Place { get; set; }
 
         /// <summary>
         /// Идентификатор обучающегося
         /// </summary>
-        public StudentModel? Student { get; set; }
+        public PersonModel Student { get; set; }
 
         /// <summary>
         /// Инструктор
         /// </summary>
-        public InstructorModel? Instructor { get; set; }
+        public InstructorModel Instructor { get; set; }
 
         /// <summary>
         /// Транспорт
         /// </summary>
-        public TransportModel? Transport { get; set; }
+        public TransportModel Transport { get; set; }
 
         /// <summary>
         /// Курс
         /// </summary>
-        public CourseModel? Course { get; set; }
+        public CourseModel Course { get; set; }
     }
 }

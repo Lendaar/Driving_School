@@ -1,15 +1,10 @@
-﻿namespace Driving_School.Services.Contracts.Models
+﻿namespace Driving_School.Context.Contracts.Models
 {
     /// <summary>
-    /// Модель обущающегося
+    /// Сущность персоны (студента)
     /// </summary>
-    public class StudentModel
+    public class Person : BaseAuditEntity
     {
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Фамилия
         /// </summary>
@@ -23,7 +18,7 @@
         /// <summary>
         /// Отчество
         /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
+        public string? Patronymic { get; set; } = string.Empty;
 
         /// <summary>
         /// Дата рождения
@@ -34,11 +29,6 @@
         /// Пасспортные данные
         /// </summary>
         public string Passport { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Адрес электронной почты
-        /// </summary>
-        public string? Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Телефон

@@ -7,7 +7,7 @@ namespace Driving_School.Context.Contracts.Interface
         IEnumerable<Instructor> Instructors { get; }
         IEnumerable<Lesson> Lessons { get; }
         IEnumerable<Place> Places { get; }
-        IEnumerable<Student> Students { get; }
+        IEnumerable<Person> Students { get; }
         IEnumerable<Transport> Transports { get; }
         IEnumerable<Course> Courses { get; }
     }

@@ -30,7 +30,7 @@ namespace Driving_School.Api.Controllers
                 EndDate = x.EndDate,
                 PlaceName = x.Place?.Name ?? string.Empty,
                 StudentName = $"{x.Student?.LastName} {x.Student?.FirstName} {x.Student?.Patronymic}",
-                InstructorName = $"{x.Instructor?.LastName} {x.Instructor?.FirstName} {x.Instructor?.Patronymic}",
+                //InstructorName = $"{x.Instructor?.LastName} {x.Instructor?.FirstName} {x.Instructor?.Patronymic}",
                 TransportName = x.Transport?.Name ?? string.Empty,
                 CourseName = x.Course?.Name ?? string.Empty
             }));
@@ -52,7 +52,7 @@ namespace Driving_School.Api.Controllers
                 EndDate = item.EndDate,
                 PlaceName = item.Place?.Name ?? string.Empty,
                 StudentName = $"{item.Student?.LastName} {item.Student?.FirstName} {item.Student?.Patronymic}",
-                InstructorName = $"{item.Instructor?.LastName} {item.Instructor?.FirstName} {item.Instructor?.Patronymic}",
+                //InstructorName = $"{item.Instructor?.LastName} {item.Instructor?.FirstName} {item.Instructor?.Patronymic}",
                 TransportName = item.Transport?.Name ?? string.Empty,
                 CourseName = item.Course?.Name ?? string.Empty
             });

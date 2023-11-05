@@ -11,28 +11,28 @@
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Фамилия
+        /// ФИО
         /// </summary>
-        public string LastName { get; set; } = string.Empty;
+        public string FIO { get; set; } = string.Empty;
 
         /// <summary>
-        /// Имя
+        /// Адрес электронной почты
         /// </summary>
-        public string FirstName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Отчество
-        /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Телефон
         /// </summary>
-        public string? Phone { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty;
 
         /// <summary>
         /// Стаж
         /// </summary>
-        public int? Experience { get; set; }
+        public int Experience { get; set; }
+
+        /// <summary>
+        /// Внутренний номер
+        /// </summary>
+        public string Number { get; set; } = string.Empty;
     }
 }

@@ -23,7 +23,7 @@
         /// <summary>
         /// Идентификатор обучающегося
         /// </summary>
-        public Guid StudentId { get; set; }
+        public Guid PersonId { get; set; }
 
         /// <summary>
         /// Идентификатор транспорта

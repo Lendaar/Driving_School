@@ -14,15 +14,15 @@ namespace Driving_School.Repositories.Implementations
             this.context = context;
         }
 
-        Task<List<Student>> IStudentReadRepository.GetAllAsync(CancellationToken cancellationToken)
+        Task<List<Person>> IStudentReadRepository.GetAllAsync(CancellationToken cancellationToken)
             => Task.FromResult(context.Students.Where(x => x.DeletedAt == null)
                 .OrderBy(x => x.LastName)
                 .ToList());
 
-        Task<Student?> IStudentReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        Task<Person?> IStudentReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
             => Task.FromResult(context.Students.FirstOrDefault(x => x.Id == id));
 
-        Task<Dictionary<Guid, Student>> IStudentReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
+        Task<Dictionary<Guid, Person>> IStudentReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
             => Task.FromResult(context.Students.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
                 .OrderBy(x => x.LastName)
                 .ToDictionary(x => x.Id));

@@ -15,7 +15,7 @@ namespace Driving_School.Services.Automappers
 
             CreateMap<Transport, TransportModel>(MemberList.Destination);
 
-            CreateMap<Student, StudentModel>(MemberList.Destination);
+            CreateMap<Person, PersonModel>(MemberList.Destination);
 
             CreateMap<Place, PlaceModel>(MemberList.Destination);
 
