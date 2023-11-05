@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Driving_School.Common\Driving_School.Common.csproj" />
     <ProjectReference Include="..\Driving_School.Context.Contracts\Driving_School.Context.Contracts.csproj" />
+    <ProjectReference Include="..\Driving_School.ContextConfiguration\Driving_School.ContextConfiguration.csproj" />
   </ItemGroup>
 
 </Project>

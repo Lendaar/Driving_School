@@ -8,7 +8,7 @@ namespace Driving_School.Context
     {
         public override void CreateModule(IServiceCollection services)
         {
-            services.AddSingleton<IDriving_SchoolContext, Driving_SchoolContext>();
+            services.AddScoped<IDriving_SchoolContext, Driving_SchoolContext>();
         }
     }
 }

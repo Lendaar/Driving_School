@@ -1,5 +1,6 @@
 ﻿using Driving_School.Context.Contracts.Interface;
 using Driving_School.Context.Contracts.Models;
+using Driving_School.ContextConfiguration;
 using Microsoft.EntityFrameworkCore;
 
 namespace Driving_School.Context
@@ -13,7 +14,7 @@ namespace Driving_School.Context
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ApplyConfigurationsFromAssembly(typeof(IContextConfigurationAnchor).Assembly);
         }
 
         public DbSet<Instructor> Instructors { get; set; }
