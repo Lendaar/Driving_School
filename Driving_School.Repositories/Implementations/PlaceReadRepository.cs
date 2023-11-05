@@ -2,6 +2,7 @@
 using Driving_School.Context.Contracts.Models;
 using Driving_School.Repositories.Anchors;
 using Driving_School.Repositories.Contracts.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Driving_School.Repositories.Implementations
 {
@@ -15,16 +16,16 @@ namespace Driving_School.Repositories.Implementations
         }
 
         Task<List<Place>> IPlaceReadRepository.GetAllAsync(CancellationToken cancellationToken)
-            => Task.FromResult(context.Places.Where(x => x.DeletedAt == null)
+            => context.Places.Where(x => x.DeletedAt == null)
                 .OrderBy(x => x.Name)
-                .ToList());
+                .ToListAsync();
 
         Task<Place?> IPlaceReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-            => Task.FromResult(context.Places.FirstOrDefault(x => x.Id == id));
+            => context.Places.FirstOrDefaultAsync(x => x.Id == id);
 
         Task<Dictionary<Guid, Place>> IPlaceReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
-            => Task.FromResult(context.Places.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
+            => context.Places.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
                 .OrderBy(x => x.Name)
-                .ToDictionary(x => x.Id));
+                .ToDictionaryAsync(x => x.Id);
     }
 }

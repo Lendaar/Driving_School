@@ -2,6 +2,7 @@
 using Driving_School.Context.Contracts.Models;
 using Driving_School.Repositories.Anchors;
 using Driving_School.Repositories.Contracts.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Driving_School.Repositories.Implementations
 {
@@ -15,16 +16,16 @@ namespace Driving_School.Repositories.Implementations
         }
 
         Task<List<Instructor>> IInstructorReadRepository.GetAllAsync(CancellationToken cancellationToken)
-            => Task.FromResult(context.Instructors.Where(x => x.DeletedAt == null)
+            => context.Instructors.Where(x => x.DeletedAt == null)
                 .OrderBy(x => x.Person.LastName)
-                .ToList());
+                .ToListAsync();
 
         Task<Instructor?> IInstructorReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-            => Task.FromResult(context.Instructors.FirstOrDefault(x => x.Id == id));
+            => context.Instructors.FirstOrDefaultAsync(x => x.Id == id);
 
         Task<Dictionary<Guid, Instructor>> IInstructorReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
-            => Task.FromResult(context.Instructors.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
+            => context.Instructors.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
                 .OrderBy(x => x.Person.LastName)
-                .ToDictionary(x => x.Id));
+                .ToDictionaryAsync(x => x.Id);
     }
 }
