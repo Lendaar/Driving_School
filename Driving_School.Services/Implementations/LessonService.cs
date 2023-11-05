@@ -66,7 +66,6 @@ namespace Driving_School.Services.Implementations
                 lessonTable.Place = mapper.Map<PlaceModel>(place);
                 listLessonModel.Add(lessonTable);
             }
-
             return listLessonModel;
         }
 

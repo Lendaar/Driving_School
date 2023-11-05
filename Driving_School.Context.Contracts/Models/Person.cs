@@ -34,5 +34,9 @@
         /// Телефон
         /// </summary>
         public string Phone { get; set; } = string.Empty;
+
+        public ICollection<Instructor> Instructor { get; set; }
+
+        public ICollection<Lesson> Lesson { get; set; }
     }
 }

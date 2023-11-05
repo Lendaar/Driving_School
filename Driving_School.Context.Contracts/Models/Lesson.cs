@@ -21,9 +21,19 @@
         public Guid PlaceId { get; set; }
 
         /// <summary>
+        /// Сущность площадки <see cref="Place"/>
+        /// </summary>
+        public Place Place { get; set; }
+
+        /// <summary>
         /// Идентификатор обучающегося
         /// </summary>
         public Guid PersonId { get; set; }
+
+        /// <summary>
+        /// Сущность обучающегося <see cref="Person"/>
+        /// </summary>
+        public Person Person { get; set; }
 
         /// <summary>
         /// Идентификатор транспорта
@@ -31,13 +41,28 @@
         public Guid TransportId { get; set; }
 
         /// <summary>
+        /// Сущность транспорта <see cref="Transport"/>
+        /// </summary>
+        public Transport Transport { get; set; }
+
+        /// <summary>
         /// Инструктор
         /// </summary>
         public Guid InstructorId { get; set; }
 
         /// <summary>
+        /// Сущность инструктора <see cref="Instructor"/>
+        /// </summary>
+        public Instructor Instructor { get; set; }
+
+        /// <summary>
         /// Курс
         /// </summary>
         public Guid CourceId { get; set; }
+
+        /// <summary>
+        /// Сущность курса <see cref="Course"/>
+        /// </summary>
+        public Course Cource { get; set; }
     }
 }

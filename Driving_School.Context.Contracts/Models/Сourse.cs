@@ -25,5 +25,7 @@
         /// </summary>
         public decimal Price { get; set; }
 
+        public ICollection<Lesson> Lesson { get; set; }
+
     }
 }

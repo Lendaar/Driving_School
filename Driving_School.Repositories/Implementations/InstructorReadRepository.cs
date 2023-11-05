@@ -16,7 +16,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<List<Instructor>> IInstructorReadRepository.GetAllAsync(CancellationToken cancellationToken)
             => Task.FromResult(context.Instructors.Where(x => x.DeletedAt == null)
-                .OrderBy(x => x.LastName)
+                .OrderBy(x => x.Person.LastName)
                 .ToList());
 
         Task<Instructor?> IInstructorReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -24,7 +24,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<Dictionary<Guid, Instructor>> IInstructorReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
             => Task.FromResult(context.Instructors.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
-                .OrderBy(x => x.LastName)
+                .OrderBy(x => x.Person.LastName)
                 .ToDictionary(x => x.Id));
     }
 }
