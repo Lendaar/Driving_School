@@ -1,9 +1,9 @@
 ﻿namespace Driving_School.Context.Contracts.Models
 {
     /// <summary>
-    /// Сущность обучающегося
+    /// Сущность персоны (студента)
     /// </summary>
-    public class Student : BaseAuditEntity
+    public class Person : BaseAuditEntity
     {
         /// <summary>
         /// Фамилия
@@ -18,7 +18,7 @@
         /// <summary>
         /// Отчество
         /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
+        public string? Patronymic { get; set; } = string.Empty;
 
         /// <summary>
         /// Дата рождения
@@ -31,13 +31,12 @@
         public string Passport { get; set; } = string.Empty;
 
         /// <summary>
-        /// Адрес электронной почты
-        /// </summary>
-        public string? Email { get; set; } = string.Empty;
-
-        /// <summary>
         /// Телефон
         /// </summary>
         public string Phone { get; set; } = string.Empty;
+
+        public ICollection<Instructor> Instructor { get; set; }
+
+        public ICollection<Lesson> Lesson { get; set; }
     }
 }

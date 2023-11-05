@@ -6,28 +6,30 @@
     public class Instructor : BaseAuditEntity
     {
         /// <summary>
-        /// Фамилия
+        /// Id person
         /// </summary>
-        public string LastName { get; set; } = string.Empty;
+        public Guid PersonId { get; set; }
 
         /// <summary>
-        /// Имя
+        /// Сущность <see cref="Person"/>
         /// </summary>
-        public string FirstName { get; set; } = string.Empty;
+        public Person Person { get; set; }
 
         /// <summary>
-        /// Отчество
+        /// Адрес электронной почты
         /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Телефон
-        /// </summary>
-        public string? Phone { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Стаж
         /// </summary>
-        public int? Experience { get; set; }
+        public int Experience { get; set; }
+
+        /// <summary>
+        /// Внутренний номер
+        /// </summary>
+        public string Number { get; set; } = string.Empty;
+
+        public ICollection<Lesson> Lesson { get; set; }
     }
 }

@@ -26,12 +26,12 @@ namespace Driving_School.Api.Controllers
             var result = await instructorService.GetAllAsync(cancellationToken);
             return Ok(result.Select(x => new InstructorResponse
             {
-                Id = x.Id,
-                LastName = x.LastName,
-                FirstName = x.FirstName,
-                Patronymic = x.Patronymic,
-                Phone = x.Phone,
-                Experience = x.Experience,
+                //Id = x.Id,
+                //LastName = x.LastName,
+                //FirstName = x.FirstName,
+                //Patronymic = x.Patronymic,
+                //Phone = x.Phone,
+                //Experience = x.Experience,
             }));
         }
 
@@ -46,12 +46,12 @@ namespace Driving_School.Api.Controllers
 
             return Ok(new InstructorResponse
             {
-                Id = result.Id,
-                LastName = result.LastName,
-                FirstName = result.FirstName,
-                Patronymic = result.Patronymic,
-                Phone = result.Phone,
-                Experience = result.Experience,
+                //Id = result.Id,
+                //LastName = result.LastName,
+                //FirstName = result.FirstName,
+                //Patronymic = result.Patronymic,
+                //Phone = result.Phone,
+                //Experience = result.Experience,
             });
         }
     }

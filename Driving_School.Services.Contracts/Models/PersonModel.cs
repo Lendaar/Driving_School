@@ -1,9 +1,9 @@
-﻿namespace Driving_School.Api.Models
+﻿namespace Driving_School.Services.Contracts.Models
 {
     /// <summary>
     /// Модель обущающегося
     /// </summary>
-    public class StudentResponse
+    public class PersonModel
     {
         /// <summary>
         /// Идентификатор
@@ -23,7 +23,7 @@
         /// <summary>
         /// Отчество
         /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
+        public string? Patronymic { get; set; } = string.Empty;
 
         /// <summary>
         /// Дата рождения
@@ -34,11 +34,6 @@
         /// Пасспортные данные
         /// </summary>
         public string Passport { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Адрес электронной почты
-        /// </summary>
-        public string? Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Телефон

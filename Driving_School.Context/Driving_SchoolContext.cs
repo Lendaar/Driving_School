@@ -1,37 +1,32 @@
 ﻿using Driving_School.Context.Contracts.Interface;
 using Driving_School.Context.Contracts.Models;
+using Driving_School.ContextConfiguration;
+using Microsoft.EntityFrameworkCore;
 
 namespace Driving_School.Context
 {
-    public class Driving_SchoolContext : IDriving_SchoolContext
+    public class Driving_SchoolContext : DbContext, IDriving_SchoolContext
     {
-        private readonly IList<Instructor> instructors;
-        private readonly IList<Lesson> lessons;
-        private readonly IList<Place> places;
-        private readonly IList<Student> students;
-        private readonly IList<Transport> transports;
-        private readonly IList<Course> courses;
-
-        public Driving_SchoolContext()
+        public Driving_SchoolContext(DbContextOptions<Driving_SchoolContext> options) : base (options)
         {
-            instructors = new List<Instructor>();
-            lessons = new List<Lesson>();
-            places = new List<Place>();
-            students = new List<Student>();
-            transports = new List<Transport>();
-            courses = new List<Course>();
+            
+        }
+        
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfigurationsFromAssembly(typeof(IContextConfigurationAnchor).Assembly);
         }
 
-        IEnumerable<Instructor> IDriving_SchoolContext.Instructors => instructors;
+        public DbSet<Instructor> Instructors { get; set; }
 
-        IEnumerable<Lesson> IDriving_SchoolContext.Lessons => lessons;
+        public DbSet<Lesson> Lessons { get; set; }
 
-        IEnumerable<Place> IDriving_SchoolContext.Places => places;
+        public DbSet<Place> Places { get; set; }
 
-        IEnumerable<Student> IDriving_SchoolContext.Students => students;
+        public DbSet<Person> Students { get; set; }
 
-        IEnumerable<Transport> IDriving_SchoolContext.Transports => transports;
+        public DbSet<Transport> Transports { get; set; }
 
-        IEnumerable<Course> IDriving_SchoolContext.Courses => courses;
+        public DbSet<Course> Courses { get; set; }
     }
 }

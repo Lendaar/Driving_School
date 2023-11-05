@@ -17,13 +17,13 @@ namespace Driving_School.Services.Implementations
             this.mapper = mapper;
         }
 
-        async Task<IEnumerable<StudentModel>> IStudentService.GetAllAsync(CancellationToken cancellationToken)
+        async Task<IEnumerable<PersonModel>> IStudentService.GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await studentReadRepository.GetAllAsync(cancellationToken);
-            return mapper.Map<IEnumerable<StudentModel>>(result);
+            return mapper.Map<IEnumerable<PersonModel>>(result);
         }
 
-        async Task<StudentModel?> IStudentService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        async Task<PersonModel?> IStudentService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var item = await studentReadRepository.GetByIdAsync(id, cancellationToken);
             if (item == null)
@@ -31,7 +31,7 @@ namespace Driving_School.Services.Implementations
                 return null;
             }
 
-            return mapper.Map<StudentModel>(item);
+            return mapper.Map<PersonModel>(item);
         }
     }
 }

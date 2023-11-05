@@ -1,4 +1,6 @@
+using Driving_School.Context;
 using Driving_School.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.GetSwaggerGen();
 builder.Services.AddDependences();
+
+var conString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContextFactory<Driving_SchoolContext>(options => options.UseSqlServer(conString), ServiceLifetime.Scoped);
 
 var app = builder.Build();
 

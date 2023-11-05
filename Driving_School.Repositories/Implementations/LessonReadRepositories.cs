@@ -2,6 +2,7 @@
 using Driving_School.Context.Contracts.Models;
 using Driving_School.Repositories.Anchors;
 using Driving_School.Repositories.Contracts.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Driving_School.Repositories.Implementations
 {
@@ -15,11 +16,11 @@ namespace Driving_School.Repositories.Implementations
         }
 
         Task<List<Lesson>> ILessonReadRepository.GetAllAsync(CancellationToken cancellationToken)
-            => Task.FromResult(context.Lessons.Where(x => x.DeletedAt == null)
+            => context.Lessons.Where(x => x.DeletedAt == null)
                 .OrderBy(x => x.StartDate)
-                .ToList());
+                .ToListAsync();
 
         Task<Lesson?> ILessonReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-            => Task.FromResult(context.Lessons.FirstOrDefault(x => x.Id == id));
+            => context.Lessons.FirstOrDefaultAsync(x => x.Id == id);
     }
 }

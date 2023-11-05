@@ -21,5 +21,7 @@ namespace Driving_School.Context.Contracts.Models
         /// Тип документов
         /// </summary>
         public GSBTypes GSBType { get; set; }
+
+        public ICollection<Lesson> Lesson { get; set; }
     }
 }

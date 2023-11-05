@@ -26,16 +26,16 @@ namespace Driving_School.Api.Controllers
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await studentService.GetAllAsync(cancellationToken);
-            return Ok(result.Select(x => new StudentResponse
+            return Ok(result.Select(x => new PersonResponse
             {
-                Id = x.Id,
-                LastName = x.LastName,
-                FirstName = x.FirstName,
-                Patronymic = x.Patronymic,
-                DateOfBirthday = x.DateOfBirthday,
-                Passport = x.Passport,
-                Email = x.Email ?? string.Empty,
-                Phone = x.Phone,
+                //Id = x.Id,
+                //LastName = x.LastName,
+                //FirstName = x.FirstName,
+                //Patronymic = x.Patronymic,
+                //DateOfBirthday = x.DateOfBirthday,
+                //Passport = x.Passport,
+                //Email = x.Email ?? string.Empty,
+                //Phone = x.Phone,
             }));
         }
 
@@ -48,16 +48,16 @@ namespace Driving_School.Api.Controllers
                 return NotFound($"Не удалось найти обучающегося с идентификатором {id}");
             }
 
-            return Ok(new StudentResponse
+            return Ok(new PersonResponse
             {
-                Id = item.Id,
-                LastName = item.LastName,
-                FirstName = item.FirstName,
-                Patronymic = item.Patronymic,
-                DateOfBirthday = item.DateOfBirthday,
-                Passport = item.Passport,
-                Email = item.Email ?? string.Empty,
-                Phone = item.Phone,
+                //Id = item.Id,
+                //LastName = item.LastName,
+                //FirstName = item.FirstName,
+                //Patronymic = item.Patronymic,
+                //DateOfBirthday = item.DateOfBirthday,
+                //Passport = item.Passport,
+                //Email = item.Email ?? string.Empty,
+                //Phone = item.Phone,
             });
         }
     }

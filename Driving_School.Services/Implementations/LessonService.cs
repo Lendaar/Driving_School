@@ -38,7 +38,7 @@ namespace Driving_School.Services.Implementations
             var lessons = await lessonReadRepository.GetAllAsync(cancellationToken);
             var transportId = lessons.Select(x => x.TransportId).Distinct();
             var instructorId = lessons.Select(x => x.InstructorId).Distinct();
-            var studentId = lessons.Select(x => x.StudentId).Distinct();
+            var studentId = lessons.Select(x => x.PersonId).Distinct();
             var courseId = lessons.Select(x => x.CourceId).Distinct();
             var placeId = lessons.Select(x => x.PlaceId).Distinct();
 
@@ -61,12 +61,11 @@ namespace Driving_School.Services.Implementations
 
                 lessonTable.Transport = mapper.Map<TransportModel>(transport);
                 lessonTable.Instructor = mapper.Map<InstructorModel>(instructor);
-                lessonTable.Student = mapper.Map<StudentModel>(student);
+                lessonTable.Student = mapper.Map<PersonModel>(student);
                 lessonTable.Course = mapper.Map<CourseModel>(course);
                 lessonTable.Place = mapper.Map<PlaceModel>(place);
                 listLessonModel.Add(lessonTable);
             }
-
             return listLessonModel;
         }
 
@@ -79,14 +78,14 @@ namespace Driving_School.Services.Implementations
             }
             var transport = await transportReadRepository.GetByIdAsync(item.TransportId, cancellationToken);
             var instructor = await instructorReadRepository.GetByIdAsync(item.InstructorId, cancellationToken);
-            var student = await studentReadRepository.GetByIdAsync(item.StudentId, cancellationToken);
+            var student = await studentReadRepository.GetByIdAsync(item.PersonId, cancellationToken);
             var course = await courseReadRepository.GetByIdAsync(item.CourceId, cancellationToken);
             var place = await placeReadRepository.GetByIdAsync(item.PlaceId, cancellationToken);
 
             var lesson = mapper.Map<LessonModel>(item);
 
             lesson.Transport = mapper.Map<TransportModel>(transport);
-            lesson.Student = mapper.Map<StudentModel>(student);
+            lesson.Student = mapper.Map<PersonModel>(student);
             lesson.Place = mapper.Map<PlaceModel>(place);
             lesson.Course = mapper.Map<CourseModel>(course);
             lesson.Instructor = mapper.Map<InstructorModel>(instructor);

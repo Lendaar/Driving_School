@@ -1,9 +1,9 @@
-﻿namespace Driving_School.Services.Contracts.Models
+﻿namespace Driving_School.Api.Models
 {
     /// <summary>
     /// Модель обущающегося
     /// </summary>
-    public class StudentModel
+    public class PersonResponse
     {
         /// <summary>
         /// Идентификатор
@@ -11,19 +11,9 @@
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Фамилия
+        /// ФИО
         /// </summary>
-        public string LastName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string FirstName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Отчество
-        /// </summary>
-        public string Patronymic { get; set; } = string.Empty;
+        public string FIO { get; set; } = string.Empty;
 
         /// <summary>
         /// Дата рождения
@@ -34,11 +24,6 @@
         /// Пасспортные данные
         /// </summary>
         public string Passport { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Адрес электронной почты
-        /// </summary>
-        public string? Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Телефон
