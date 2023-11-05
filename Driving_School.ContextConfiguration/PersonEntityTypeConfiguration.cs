@@ -21,7 +21,12 @@ namespace Driving_School.ContextConfiguration
                     .HasDatabaseName($"IX_{nameof(Person)}_{nameof(Person.LastName)}");
             builder.HasMany(x => x.Lesson)
                     .WithOne(x => x.Person)
-                    .HasForeignKey(x => x.PersonId);
+                    .HasForeignKey(x => x.PersonId)
+                    .OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(x => x.Instructor)
+                    .WithOne(x => x.Person)
+                    .HasForeignKey(x => x.PersonId)
+                    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

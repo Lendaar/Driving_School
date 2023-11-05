@@ -9,7 +9,7 @@ namespace Driving_School.ContextConfiguration
         public void Configure(EntityTypeBuilder<Transport> builder)
         {
             builder.ToTable("TTransports");
-            builder.HasIdAsKey();
+            builder.HasKey(x => x.Id);
             builder.PropertyAuditConfiguration();
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Number).IsRequired();
@@ -19,7 +19,8 @@ namespace Driving_School.ContextConfiguration
                 .HasDatabaseName($"IX_{nameof(Transport)}_{nameof(Transport.Name)}");
             builder.HasMany(x => x.Lesson)
                 .WithOne(x => x.Transport)
-                .HasForeignKey(x => x.TransportId);
+                .HasForeignKey(x => x.TransportId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

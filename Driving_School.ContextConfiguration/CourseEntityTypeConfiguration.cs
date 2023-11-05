@@ -20,7 +20,8 @@ namespace Driving_School.ContextConfiguration
                 .HasDatabaseName($"IX_{nameof(Course)}_{nameof(Course.Name)}");
             builder.HasMany(x => x.Lesson)
                 .WithOne(x => x.Cource)
-                .HasForeignKey(x => x.CourceId);
+                .HasForeignKey(x => x.CourceId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
