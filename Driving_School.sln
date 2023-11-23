@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Api_", "Driving_School\Driving_School.Api_.csproj", "{CED03762-6C27-4B83-BE45-8470F3F6D435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Api", "Driving_School\Driving_School.Api.csproj", "{CED03762-6C27-4B83-BE45-8470F3F6D435}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Driving_School.Context", "Driving_School.Context\Driving_School.Context.csproj", "{F02A9C5D-65B4-4DCB-9C91-B75004B3D35A}"
 	ProjectSection(ProjectDependencies) = postProject
