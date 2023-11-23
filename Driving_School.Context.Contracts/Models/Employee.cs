@@ -1,9 +1,11 @@
-﻿namespace Driving_School.Context.Contracts.Models
+﻿using Driving_School.Context.Contracts.Enums;
+
+namespace Driving_School.Context.Contracts.Models
 {
     /// <summary>
-    /// Сущность инструктора
+    /// Сущность работнитка
     /// </summary>
-    public class Instructor : BaseAuditEntity
+    public class Employee : BaseAuditEntity
     {
         /// <summary>
         /// Id person
@@ -14,6 +16,10 @@
         /// Сущность <see cref="Person"/>
         /// </summary>
         public Person Person { get; set; }
+        /// <summary>
+        /// Тип работника
+        /// </summary>
+        public EmployeeTypes EmployeeType { get; set; }
 
         /// <summary>
         /// Адрес электронной почты
@@ -30,6 +36,8 @@
         /// </summary>
         public string Number { get; set; } = string.Empty;
 
-        public ICollection<Lesson> Lesson { get; set; }
+        public ICollection<Lesson> LessonInstructor { get; set; }
+
+        public ICollection<Lesson> LessonStudent { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace Driving_School.Context
             builder.ApplyConfigurationsFromAssembly(typeof(IContextConfigurationAnchor).Assembly);
         }
 
-        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public DbSet<Lesson> Lessons { get; set; }
 
         public DbSet<Place> Places { get; set; }
 
-        public DbSet<Person> Students { get; set; }
+        public DbSet<Person> Persons { get; set; }
 
         public DbSet<Transport> Transports { get; set; }
 

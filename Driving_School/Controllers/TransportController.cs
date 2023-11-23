@@ -1,7 +1,7 @@
-﻿using Driving_School.Api.Models;
+﻿using AutoMapper;
+using Driving_School.Api.Models;
 using Driving_School.Services.Contracts.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Extensions;
 
 namespace Driving_School.Api.Controllers
 {
@@ -14,41 +14,38 @@ namespace Driving_School.Api.Controllers
     public class TransportController : ControllerBase
     {
         private readonly ITransportService transportService;
+        private readonly IMapper mapper;
 
-        public TransportController(ITransportService transportService)
+        public TransportController(ITransportService transportService, IMapper mapper)
         {
             this.transportService = transportService;
+            this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Получить список всех Транспортных средств
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<TransportResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await transportService.GetAllAsync(cancellationToken);
-            return Ok(result.Select(x => new TransportResponse
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Number = x.Number,
-                GSBType = x.GSBType.GetDisplayName(),
-            }));
+            return Ok(mapper.Map<IEnumerable<TransportResponse>>(result));
         }
 
+        /// <summary>
+        /// Получить Транспортное средство по идентификатору
+        /// </summary>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(IEnumerable<TransportResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
-            var result = await transportService.GetByIdAsync(id, cancellationToken);
-            if (result == null)
+            var item = await transportService.GetByIdAsync(id, cancellationToken);
+            if (item == null)
             {
                 return NotFound($"Не удалось найти транспорт с идентификатором {id}");
             }
-
-            return Ok(new TransportResponse
-            {
-                Id = result.Id,
-                Name = result.Name,
-                Number = result.Number,
-                GSBType = result.GSBType.GetDisplayName(),
-            });
+            return Ok(mapper.Map<TransportResponse>(item));
         }
     }
 }

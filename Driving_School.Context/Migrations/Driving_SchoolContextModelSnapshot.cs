@@ -70,7 +70,7 @@ namespace Driving_School.Context.Migrations
                     b.ToTable("TCourses", (string)null);
                 });
 
-            modelBuilder.Entity("Driving_School.Context.Contracts.Models.Instructor", b =>
+            modelBuilder.Entity("Driving_School.Context.Contracts.Models.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,6 +90,9 @@ namespace Driving_School.Context.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployeeType")
+                        .HasColumnType("int");
 
                     b.Property<int>("Experience")
                         .HasColumnType("int");
@@ -112,12 +115,12 @@ namespace Driving_School.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Experience")
-                        .HasDatabaseName("IX_Instructor_Experience")
+                        .HasDatabaseName("IX_Employee_Experience")
                         .HasFilter("DeletedAt is null");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("TInstructors", (string)null);
+                    b.ToTable("TEmployees", (string)null);
                 });
 
             modelBuilder.Entity("Driving_School.Context.Contracts.Models.Lesson", b =>
@@ -146,14 +149,14 @@ namespace Driving_School.Context.Migrations
                     b.Property<Guid>("InstructorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("PlaceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("StartDate")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TransportId")
                         .HasColumnType("uniqueidentifier");
@@ -172,13 +175,13 @@ namespace Driving_School.Context.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.HasIndex("PersonId");
-
                     b.HasIndex("PlaceId");
 
                     b.HasIndex("StartDate")
                         .HasDatabaseName("IX_Lesson_StartDate")
                         .HasFilter("DeletedAt is null");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("TransportId");
 
@@ -331,10 +334,10 @@ namespace Driving_School.Context.Migrations
                     b.ToTable("TTransports", (string)null);
                 });
 
-            modelBuilder.Entity("Driving_School.Context.Contracts.Models.Instructor", b =>
+            modelBuilder.Entity("Driving_School.Context.Contracts.Models.Employee", b =>
                 {
                     b.HasOne("Driving_School.Context.Contracts.Models.Person", "Person")
-                        .WithMany("Instructor")
+                        .WithMany("Employee")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -350,21 +353,21 @@ namespace Driving_School.Context.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Driving_School.Context.Contracts.Models.Instructor", "Instructor")
-                        .WithMany("Lesson")
+                    b.HasOne("Driving_School.Context.Contracts.Models.Employee", "Instructor")
+                        .WithMany("LessonInstructor")
                         .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Driving_School.Context.Contracts.Models.Person", "Person")
-                        .WithMany("Lesson")
-                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Driving_School.Context.Contracts.Models.Place", "Place")
                         .WithMany("Lesson")
                         .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Driving_School.Context.Contracts.Models.Employee", "Student")
+                        .WithMany("LessonStudent")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -378,9 +381,9 @@ namespace Driving_School.Context.Migrations
 
                     b.Navigation("Instructor");
 
-                    b.Navigation("Person");
-
                     b.Navigation("Place");
+
+                    b.Navigation("Student");
 
                     b.Navigation("Transport");
                 });
@@ -390,16 +393,16 @@ namespace Driving_School.Context.Migrations
                     b.Navigation("Lesson");
                 });
 
-            modelBuilder.Entity("Driving_School.Context.Contracts.Models.Instructor", b =>
+            modelBuilder.Entity("Driving_School.Context.Contracts.Models.Employee", b =>
                 {
-                    b.Navigation("Lesson");
+                    b.Navigation("LessonInstructor");
+
+                    b.Navigation("LessonStudent");
                 });
 
             modelBuilder.Entity("Driving_School.Context.Contracts.Models.Person", b =>
                 {
-                    b.Navigation("Instructor");
-
-                    b.Navigation("Lesson");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Driving_School.Context.Contracts.Models.Place", b =>

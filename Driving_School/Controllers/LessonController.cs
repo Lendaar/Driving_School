@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Driving_School.Api.Models;
 using Driving_School.Services.Contracts.Interface;
+using AutoMapper;
 
 namespace Driving_School.Api.Controllers
 {
@@ -13,30 +14,30 @@ namespace Driving_School.Api.Controllers
     public class LessonController : Controller
     {
         private readonly ILessonService lessonService;
+        private readonly IMapper mapper;
 
-        public LessonController(ILessonService lessonService)
+        public LessonController(ILessonService lessonService, IMapper mapper)
         {
             this.lessonService = lessonService;
+            this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Получить список всех занятий
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<LessonResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await lessonService.GetAllAsync(cancellationToken);
-            return Ok(result.Select(x => new LessonResponse
-            {
-                Id = x.Id,
-                StartDate = x.StartDate,
-                EndDate = x.EndDate,
-                PlaceName = x.Place?.Name ?? string.Empty,
-                StudentName = $"{x.Student?.LastName} {x.Student?.FirstName} {x.Student?.Patronymic}",
-                //InstructorName = $"{x.Instructor?.LastName} {x.Instructor?.FirstName} {x.Instructor?.Patronymic}",
-                TransportName = x.Transport?.Name ?? string.Empty,
-                CourseName = x.Course?.Name ?? string.Empty
-            }));
+            return Ok(mapper.Map<IEnumerable<LessonResponse>>(result));
         }
 
+        /// <summary>
+        /// Получить занятие по идентификатору
+        /// </summary>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(IEnumerable<LessonResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var item = await lessonService.GetByIdAsync(id, cancellationToken);
@@ -44,18 +45,7 @@ namespace Driving_School.Api.Controllers
             {
                 return NotFound($"Не удалось найти занятие с идентификатором {id}");
             }
-
-            return Ok(new LessonResponse
-            {
-                Id = item.Id,
-                StartDate = item.StartDate,
-                EndDate = item.EndDate,
-                PlaceName = item.Place?.Name ?? string.Empty,
-                StudentName = $"{item.Student?.LastName} {item.Student?.FirstName} {item.Student?.Patronymic}",
-                //InstructorName = $"{item.Instructor?.LastName} {item.Instructor?.FirstName} {item.Instructor?.Patronymic}",
-                TransportName = item.Transport?.Name ?? string.Empty,
-                CourseName = item.Course?.Name ?? string.Empty
-            });
+            return Ok(mapper.Map<LessonResponse>(item));
         }
     }
 }

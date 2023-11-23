@@ -1,19 +1,31 @@
-﻿namespace Driving_School.Services.Contracts.Models
+﻿using Driving_School.Api.Enums;
+
+namespace Driving_School.Api.Models
 {
     /// <summary>
-    /// Модель инструктора
+    /// Модель работника
     /// </summary>
-    public class InstructorModel
+    public class EmployeeResponse
     {
         /// <summary>
         /// Идентификатор
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }   
 
         /// <summary>
-        /// Идентификатор Person
+        /// ФИО
         /// </summary>
-        public Guid PersonId { get; set; }
+        public string FIO { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Тип работника
+        /// </summary>
+        public EmployeeTypes EmployeeType { get; set; }
+
+        /// <summary>
+        /// Телефон
+        /// </summary>
+        public string Phone { get; set; } = string.Empty;
 
         /// <summary>
         /// Адрес электронной почты

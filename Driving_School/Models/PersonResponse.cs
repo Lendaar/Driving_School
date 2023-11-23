@@ -1,7 +1,7 @@
 ﻿namespace Driving_School.Api.Models
 {
     /// <summary>
-    /// Модель обущающегося
+    /// Модель персоны
     /// </summary>
     public class PersonResponse
     {

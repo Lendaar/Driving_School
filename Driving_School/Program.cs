@@ -1,3 +1,4 @@
+using Driving_School.Api.Infrastructure;
 using Driving_School.Context;
 using Driving_School.Infrastructure;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,7 @@
 ﻿namespace Driving_School.Services.Contracts.Models
 {
     /// <summary>
-    /// Модель обущающегося
+    /// Модель персоны
     /// </summary>
     public class PersonModel
     {

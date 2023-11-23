@@ -28,12 +28,12 @@
         /// <summary>
         /// Идентификатор обучающегося
         /// </summary>
-        public PersonModel Student { get; set; }
+        public EmployeeModel Student { get; set; }
 
         /// <summary>
         /// Инструктор
         /// </summary>
-        public InstructorModel Instructor { get; set; }
+        public EmployeeModel Instructor { get; set; }
 
         /// <summary>
         /// Транспорт

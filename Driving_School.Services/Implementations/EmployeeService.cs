@@ -6,24 +6,24 @@ using Driving_School.Services.Contracts.Models;
 
 namespace Driving_School.Services.Implementations
 {
-    public class InstructorService : IInstructorService, IServiceAnchor
+    public class EmployeeService : IEmployeeService, IServiceAnchor
     {
-        private readonly IInstructorReadRepository instructorReadRepository;
+        private readonly IEmployeeReadRepository instructorReadRepository;
         private readonly IMapper mapper;
 
-        public InstructorService(IInstructorReadRepository instructorReadRepository, IMapper mapper)
+        public EmployeeService(IEmployeeReadRepository instructorReadRepository, IMapper mapper)
         {
             this.instructorReadRepository = instructorReadRepository;
             this.mapper = mapper;
         }
 
-        async Task<IEnumerable<InstructorModel>> IInstructorService.GetAllAsync(CancellationToken cancellationToken)
+        async Task<IEnumerable<EmployeeModel>> IEmployeeService.GetAllAsync(CancellationToken cancellationToken)
         {
             var result = await instructorReadRepository.GetAllAsync(cancellationToken);
-            return mapper.Map<IEnumerable<InstructorModel>>(result);
+            return mapper.Map<IEnumerable<EmployeeModel>>(result);
         }
 
-        async Task<InstructorModel?> IInstructorService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        async Task<EmployeeModel?> IEmployeeService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var item = await instructorReadRepository.GetByIdAsync(id, cancellationToken);
             if (item == null)
@@ -31,7 +31,7 @@ namespace Driving_School.Services.Implementations
                 return null;
             }
 
-            return mapper.Map<InstructorModel>(item);
+            return mapper.Map<EmployeeModel>(item);
         }
     }
 }

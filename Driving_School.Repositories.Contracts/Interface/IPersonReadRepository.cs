@@ -5,7 +5,7 @@ namespace Driving_School.Repositories.Contracts.Interface
     /// <summary>
     /// Репозиторий чтения <see cref="Person"/>
     /// </summary>
-    public interface IStudentReadRepository
+    public interface IPersonReadRepository
     {
         /// <summary>
         /// Получить список всех <see cref="Person"/>

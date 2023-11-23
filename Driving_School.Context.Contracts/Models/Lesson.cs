@@ -28,12 +28,12 @@
         /// <summary>
         /// Идентификатор обучающегося
         /// </summary>
-        public Guid PersonId { get; set; }
+        public Guid StudentId { get; set; }
 
         /// <summary>
-        /// Сущность обучающегося <see cref="Person"/>
+        /// Сущность обучающегося <see cref="Employee"/>
         /// </summary>
-        public Person Person { get; set; }
+        public Employee Student { get; set; }
 
         /// <summary>
         /// Идентификатор транспорта
@@ -51,9 +51,9 @@
         public Guid InstructorId { get; set; }
 
         /// <summary>
-        /// Сущность инструктора <see cref="Instructor"/>
+        /// Сущность инструктора <see cref="Employee"/>
         /// </summary>
-        public Instructor Instructor { get; set; }
+        public Employee Instructor { get; set; }
 
         /// <summary>
         /// Курс

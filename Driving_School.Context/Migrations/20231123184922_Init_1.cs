@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Driving_School.Context.Migrations
 {
-    public partial class Init : Migration
+    public partial class Init_1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -90,11 +90,12 @@ namespace Driving_School.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TInstructors",
+                name: "TEmployees",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EmployeeType = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Experience = table.Column<int>(type: "int", nullable: false),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -106,9 +107,9 @@ namespace Driving_School.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TInstructors", x => x.Id);
+                    table.PrimaryKey("PK_TEmployees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TInstructors_TPersons_PersonId",
+                        name: "FK_TEmployees_TPersons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "TPersons",
                         principalColumn: "Id");
@@ -122,7 +123,7 @@ namespace Driving_School.Context.Migrations
                     StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     PlaceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TransportId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InstructorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CourceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -141,14 +142,14 @@ namespace Driving_School.Context.Migrations
                         principalTable: "TCourses",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_TLessons_TInstructors_InstructorId",
+                        name: "FK_TLessons_TEmployees_InstructorId",
                         column: x => x.InstructorId,
-                        principalTable: "TInstructors",
+                        principalTable: "TEmployees",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_TLessons_TPersons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "TPersons",
+                        name: "FK_TLessons_TEmployees_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "TEmployees",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TLessons_TPlaces_PlaceId",
@@ -169,14 +170,14 @@ namespace Driving_School.Context.Migrations
                 filter: "DeletedAt is null");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Instructor_Experience",
-                table: "TInstructors",
+                name: "IX_Employee_Experience",
+                table: "TEmployees",
                 column: "Experience",
                 filter: "DeletedAt is null");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TInstructors_PersonId",
-                table: "TInstructors",
+                name: "IX_TEmployees_PersonId",
+                table: "TEmployees",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
@@ -196,14 +197,14 @@ namespace Driving_School.Context.Migrations
                 column: "InstructorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TLessons_PersonId",
-                table: "TLessons",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TLessons_PlaceId",
                 table: "TLessons",
                 column: "PlaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TLessons_StudentId",
+                table: "TLessons",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TLessons_TransportId",
@@ -238,7 +239,7 @@ namespace Driving_School.Context.Migrations
                 name: "TCourses");
 
             migrationBuilder.DropTable(
-                name: "TInstructors");
+                name: "TEmployees");
 
             migrationBuilder.DropTable(
                 name: "TPlaces");

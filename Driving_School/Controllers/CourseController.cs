@@ -1,4 +1,5 @@
-﻿using Driving_School.Api.Models;
+﻿using AutoMapper;
+using Driving_School.Api.Models;
 using Driving_School.Services.Contracts.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,44 +13,42 @@ namespace Driving_School.Api.Controllers
     [ApiExplorerSettings(GroupName = "Course")]
     public class CourseController : ControllerBase
     {
-        private readonly ICourseService courseService;
+        private readonly ICourseService courseService; 
+        private readonly IMapper mapper;
 
-        public CourseController(ICourseService courseService)
+        /// <summary>
+        /// Инициализирует новый экземпляр <see cref="CourseController"/>
+        /// </summary>
+        public CourseController(ICourseService courseService, IMapper mapper)
         {
             this.courseService = courseService;
+            this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Получить список всех курсов
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<CourseResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await courseService.GetAllAsync(cancellationToken);
-            return Ok(result.Select(x => new CourseResponse
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                Duration = x.Duration,
-                Price = x.Price,
-            }));
+            return Ok(mapper.Map<IEnumerable<CourseResponse>>(result));
         }
 
+        /// <summary>
+        /// Получить курс по идентификатору
+        /// </summary>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(IEnumerable<CourseResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var item = await courseService.GetByIdAsync(id, cancellationToken);
             if (item == null)
             {
-                return NotFound($"Не удалось найти документ с идентификатором {id}");
+                return NotFound($"Не удалось найти курс с идентификатором {id}");
             }
-
-            return Ok(new CourseResponse
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                Duration = item.Duration,
-                Price = item.Price,
-            });
+            return Ok(mapper.Map<CourseResponse>(item));
         }
     }
 }

@@ -4,6 +4,8 @@ using Driving_School.Context.Contracts.Models;
 using Driving_School.Services.Contracts.Models;
 using GSBTypes_Contracts = Driving_School.Context.Contracts.Enums.GSBTypes;
 using GSBTypes_Services = Driving_School.Services.Contracts.Enums.GSBTypes;
+using EmployeeTypess_Contracts = Driving_School.Context.Contracts.Enums.EmployeeTypes;
+using EmployeeTypes_Services = Driving_School.Services.Contracts.Enums.EmployeeTypes;
 
 namespace Driving_School.Services.Automappers
 {
@@ -11,7 +13,7 @@ namespace Driving_School.Services.Automappers
     {
         public ServiceProfile()
         {
-            CreateMap<Instructor, InstructorModel>(MemberList.Destination);
+            CreateMap<Employee, EmployeeModel>(MemberList.Destination);
 
             CreateMap<Transport, TransportModel>(MemberList.Destination);
 
@@ -29,6 +31,7 @@ namespace Driving_School.Services.Automappers
                 .ForMember(x => x.Course, next => next.Ignore());
 
             CreateMap<GSBTypes_Contracts, GSBTypes_Services>().ConvertUsingEnumMapping(x => x.MapByName()).ReverseMap();
+            CreateMap<EmployeeTypess_Contracts, EmployeeTypes_Services>().ConvertUsingEnumMapping(x => x.MapByName()).ReverseMap();
         }
     }
 }

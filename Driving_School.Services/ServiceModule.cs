@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using Driving_School.Common;
+﻿using Driving_School.Common;
 using Driving_School.Services.Anchors;
+using Driving_School.Services.Automappers;
 using Driving_School.Shared;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,10 +8,10 @@ namespace Driving_School.Services
 {
     public class ServiceModule : Module
     {
-        public override void CreateModule(IServiceCollection services)
+        public override void CreateModule(IServiceCollection service)
         {
-            services.AssemblyInterfaceAssignableTo<IServiceAnchor>(ServiceLifetime.Scoped);
-            services.AddMapper<Profile>();
+            service.AssemblyInterfaceAssignableTo<IServiceAnchor>(ServiceLifetime.Scoped);
+            service.RegisterAutoMapperProfile<ServiceProfile>();
         }
     }
 }
