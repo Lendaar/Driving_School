@@ -69,7 +69,7 @@ erDiagram
     TEmployees ||--o{ TLessons : FK_Student
     TEmployees {
         guid Id PK "not null"
-        guid PersonId "not null"
+        guid PersonId FK "not null"
         int EmployeeType "not null"
         nvarchar Email "not null"
         int Experience "not null"
