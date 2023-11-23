@@ -1,9 +1,11 @@
-﻿namespace Driving_School.Services.Contracts.Models
+﻿using Driving_School.Services.Contracts.Enums;
+
+namespace Driving_School.Services.Contracts.Models
 {
     /// <summary>
-    /// Модель инструктора
+    /// Модель работника
     /// </summary>
-    public class InstructorModel
+    public class EmployeeModel
     {
         /// <summary>
         /// Идентификатор
@@ -13,7 +15,12 @@
         /// <summary>
         /// Идентификатор Person
         /// </summary>
-        public Guid PersonId { get; set; }
+        public PersonModel Person { get; set; }
+
+        /// <summary>
+        /// Тип работника
+        /// </summary>
+        public EmployeeTypes EmployeeType { get; set; }
 
         /// <summary>
         /// Адрес электронной почты

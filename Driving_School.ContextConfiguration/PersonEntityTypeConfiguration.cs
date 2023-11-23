@@ -19,11 +19,7 @@ namespace Driving_School.ContextConfiguration
             builder.HasIndex(x => x.LastName)
                     .HasFilter($"{nameof(Person.DeletedAt)} is null")
                     .HasDatabaseName($"IX_{nameof(Person)}_{nameof(Person.LastName)}");
-            builder.HasMany(x => x.Lesson)
-                    .WithOne(x => x.Person)
-                    .HasForeignKey(x => x.PersonId)
-                    .OnDelete(DeleteBehavior.NoAction);
-            builder.HasMany(x => x.Instructor)
+            builder.HasMany(x => x.Employee)
                     .WithOne(x => x.Person)
                     .HasForeignKey(x => x.PersonId)
                     .OnDelete(DeleteBehavior.NoAction);

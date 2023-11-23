@@ -2,7 +2,7 @@
 
 namespace Driving_School.Services.Contracts.Interface
 {
-    public interface IStudentService
+    public interface IPersonService
     {
         /// <summary>
         /// Получить список всех <see cref="PersonModel"/>
