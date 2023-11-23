@@ -65,7 +65,8 @@ erDiagram
         nvarchar UpdatedBy "not null"
         datetimeoffset DeletedAd "null"
     }
-    TEmployees ||--o{ TLessons : FK_Instructor & FK_Student
+    TEmployees ||--o{ TLessons : FK_Instructor
+    TEmployees ||--o{ TLessons : FK_Student
     TEmployees {
         guid Id PK "not null"
         guid PersonId "not null"
