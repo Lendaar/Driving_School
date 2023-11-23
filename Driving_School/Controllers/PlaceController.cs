@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Driving_School.Api.Models;
 using Driving_School.Services.Contracts.Interface;
+using AutoMapper;
 
 namespace Driving_School.Api.Controllers
 {
@@ -13,26 +14,30 @@ namespace Driving_School.Api.Controllers
     public class PlaceController : Controller
     {
         private readonly IPlaceService placeService;
+        private readonly IMapper mapper;
 
-        public PlaceController(IPlaceService placeService)
+        public PlaceController(IPlaceService placeService, IMapper mapper)
         {
             this.placeService = placeService;
+            this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Получить список всех Площадок
+        /// </summary>
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<PlaceResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await placeService.GetAllAsync(cancellationToken);
-            return Ok(result.Select(x => new PlaceResponse
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                Address = x.Address,
-            }));
+            return Ok(mapper.Map<IEnumerable<PlaceResponse>>(result));
         }
 
+        /// <summary>
+        /// Получить Площадку по идентификатору
+        /// </summary>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(IEnumerable<PlaceResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
         {
             var item = await placeService.GetByIdAsync(id, cancellationToken);
@@ -40,14 +45,7 @@ namespace Driving_School.Api.Controllers
             {
                 return NotFound($"Не удалось найти площадку с идентификатором {id}");
             }
-
-            return Ok(new PlaceResponse
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Description = item.Description,
-                Address = item.Address,
-            });
+            return Ok(mapper.Map<PlaceResponse>(item));
         }
     }
 }
