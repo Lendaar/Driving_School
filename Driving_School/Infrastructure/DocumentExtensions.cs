@@ -8,20 +8,22 @@ namespace Driving_School.Api.Infrastructure
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("Instructor", new OpenApiInfo { Title = "Сущность инструктора", Version = "v1" });
-                c.SwaggerDoc("Student", new OpenApiInfo { Title = "Сущность обучающегося", Version = "v1" });
+                c.SwaggerDoc("Employee", new OpenApiInfo { Title = "Сущность работника", Version = "v1" });
+                c.SwaggerDoc("Person", new OpenApiInfo { Title = "Сущность персоны", Version = "v1" });
                 c.SwaggerDoc("Place", new OpenApiInfo { Title = "Сущность площадки", Version = "v1" });
                 c.SwaggerDoc("Course", new OpenApiInfo { Title = "Сущность курса", Version = "v1" });
                 c.SwaggerDoc("Transport", new OpenApiInfo { Title = "Сущность транспорта", Version = "v1" });
                 c.SwaggerDoc("Lesson", new OpenApiInfo { Title = "Сущность занятия", Version = "v1" });
+                var filePath = Path.Combine(AppContext.BaseDirectory, "Driving_School.Api.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
         public static void GetSwaggerUI(this WebApplication web)
         {
             web.UseSwaggerUI(x =>
             {
-                x.SwaggerEndpoint("Instructor/swagger.json", "Инструкторы");
-                x.SwaggerEndpoint("Student/swagger.json", "Обучающиеся");
+                x.SwaggerEndpoint("Employee/swagger.json", "Работники");
+                x.SwaggerEndpoint("Person/swagger.json", "Персоны");
                 x.SwaggerEndpoint("Place/swagger.json", "Площадки");
                 x.SwaggerEndpoint("Course/swagger.json", "Курсы");
                 x.SwaggerEndpoint("Transport/swagger.json", "Транспорт");
