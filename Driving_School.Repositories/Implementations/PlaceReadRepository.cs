@@ -1,31 +1,37 @@
-﻿using Driving_School.Context.Contracts.Interface;
+﻿using Driving_School.Common.Entity.InterfaceDB;
+using Driving_School.Context.Contracts.Interface;
 using Driving_School.Context.Contracts.Models;
 using Driving_School.Repositories.Anchors;
 using Driving_School.Repositories.Contracts.Interface;
 using Microsoft.EntityFrameworkCore;
+using TimeTable203.Common.Entity.Repositories;
 
 namespace Driving_School.Repositories.Implementations
 {
     public class PlaceReadRepository : IPlaceReadRepository, IRepositoriesAnchor
     {
-        private readonly IDriving_SchoolContext context;
+        private readonly IDbRead reader;
 
-        public PlaceReadRepository(IDriving_SchoolContext context)
+        public PlaceReadRepository(IDbRead reader)
         {
-            this.context = context;
+            this.reader = reader;
         }
 
-        Task<List<Place>> IPlaceReadRepository.GetAllAsync(CancellationToken cancellationToken)
-            => context.Places.Where(x => x.DeletedAt == null)
+        Task<IReadOnlyCollection<Place>> IPlaceReadRepository.GetAllAsync(CancellationToken cancellationToken)
+            => reader.Read<Place>()
                 .OrderBy(x => x.Name)
-                .ToListAsync();
+                .ToReadOnlyCollectionAsync(cancellationToken);
 
         Task<Place?> IPlaceReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-            => context.Places.FirstOrDefaultAsync(x => x.Id == id);
+             => reader.Read<Place>()
+                .ById(id)
+                .FirstOrDefaultAsync(cancellationToken);
 
         Task<Dictionary<Guid, Place>> IPlaceReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
-            => context.Places.Where(x => x.DeletedAt == null && ids.Contains(x.Id))
+            => reader.Read<Place>()
+                .NotDeletedAt()
+                .ByIds(ids)
                 .OrderBy(x => x.Name)
-                .ToDictionaryAsync(x => x.Id);
+                .ToDictionaryAsync(key => key.Id, cancellation);
     }
 }
