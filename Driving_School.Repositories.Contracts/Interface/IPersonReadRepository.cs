@@ -10,7 +10,7 @@ namespace Driving_School.Repositories.Contracts.Interface
         /// <summary>
         /// Получить список всех <see cref="Person"/>
         /// </summary>
-        Task<List<Person>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<Person>> GetAllAsync(CancellationToken cancellationToken);
         /// <summary>
         /// Получить <see cref="Person"/> по идентификатору
         /// </summary>
