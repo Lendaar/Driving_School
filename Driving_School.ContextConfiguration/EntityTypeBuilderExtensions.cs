@@ -1,4 +1,5 @@
-﻿using Driving_School.Context.Contracts.Models;
+﻿using Driving_School.Common.Entity.EntityInterface;
+using Driving_School.Context.Contracts.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Driving_School.ContextConfiguration
@@ -21,7 +22,7 @@ namespace Driving_School.ContextConfiguration
         /// Задаёт конфигурацию ключа для идентификатора <see cref="IEntityWithId.Id"/>
         /// </summary>
         public static void HasIdAsKey<T>(this EntityTypeBuilder<T> builder)
-            where T : BaseAuditEntity
+            where T : class, IEntityWithId
             => builder.HasKey(x => x.Id);
     }
 }
