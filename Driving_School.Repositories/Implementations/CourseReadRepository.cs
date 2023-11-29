@@ -1,9 +1,7 @@
 ﻿using Driving_School.Common.Entity.InterfaceDB;
 using Driving_School.Context.Contracts.Models;
-using Driving_School.Repositories.Anchors;
 using Driving_School.Repositories.Contracts.Interface;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
 using TimeTable203.Common.Entity.Repositories;
 
 namespace Driving_School.Repositories.Implementations
