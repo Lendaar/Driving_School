@@ -13,7 +13,7 @@ namespace Driving_School.Services.Contracts.RequestModels
         /// <summary>
         /// Идентификатор Person
         /// </summary>
-        public PersonModel Person { get; set; }
+        public Guid Person { get; set; }
 
         /// <summary>
         /// Тип работника
