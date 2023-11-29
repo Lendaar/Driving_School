@@ -1,9 +1,16 @@
-﻿namespace Driving_School.Context.Contracts.Models
+﻿using Driving_School.Common.Entity;
+using Driving_School.Common.Entity.EntityInterface;
+
+namespace Driving_School.Context.Contracts.Models
 {
     /// <summary>
     /// Базовый класс с аудитом
     /// </summary>
-    public abstract class BaseAuditEntity
+    public abstract class BaseAuditEntity : IEntity,
+        IEntityWithId,
+        IEntityAuditCreated,
+        IEntityAuditUpdated,
+        IEntityAuditDeleted
     {
         /// <summary>
         /// Идентификатор
