@@ -5,15 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers(x =>
 {
     x.Filters.Add<Driving_SchoolExceptionFilter>();
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.GetSwaggerGen();
 builder.Services.AddDependences();
 

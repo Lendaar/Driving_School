@@ -8,7 +8,7 @@ namespace Driving_School.Api.Infrastructure
     /// <summary>
     /// Фильтр для обработки ошибок раздела администрирования
     /// </summary>
-    public class Driving_SchoolExceptionFilter
+    public class Driving_SchoolExceptionFilter : IExceptionFilter
     {
         /// <inheritdoc/>
         public void OnException(ExceptionContext context)
