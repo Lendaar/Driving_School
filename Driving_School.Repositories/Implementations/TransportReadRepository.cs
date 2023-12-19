@@ -17,6 +17,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<IReadOnlyCollection<Transport>> ITransportReadRepository.GetAllAsync(CancellationToken cancellationToken)
             => reader.Read<Transport>()
+                 .NotDeletedAt()
                 .OrderBy(x => x.Name)
                 .ToReadOnlyCollectionAsync(cancellationToken);
 

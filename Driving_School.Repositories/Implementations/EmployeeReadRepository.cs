@@ -17,6 +17,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<IReadOnlyCollection<Employee>> IEmployeeReadRepository.GetAllAsync(CancellationToken cancellationToken)
             => reader.Read<Employee>()
+                .NotDeletedAt()
                 .OrderBy(x => x.Person.LastName)
                 .ToReadOnlyCollectionAsync(cancellationToken);
 
@@ -26,10 +27,10 @@ namespace Driving_School.Repositories.Implementations
                 .FirstOrDefaultAsync(cancellationToken);
 
         Task<Dictionary<Guid, Employee>> IEmployeeReadRepository.GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
-            => reader.Read<Employee>()
-            .NotDeletedAt()
-            .ByIds(ids)
-            .OrderBy(x => x.Person.LastName)
-            .ToDictionaryAsync(key => key.Id, cancellation);
+             => reader.Read<Employee>()
+                .NotDeletedAt()
+                .ByIds(ids)
+                .OrderBy(x => x.Person.LastName)
+                .ToDictionaryAsync(key => key.Id, cancellation);
     }
 }

@@ -17,6 +17,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<IReadOnlyCollection<Lesson>> ILessonReadRepository.GetAllAsync(CancellationToken cancellationToken)
             => reader.Read<Lesson>()
+                .NotDeletedAt()
                 .OrderBy(x => x.StartDate)
                 .ToReadOnlyCollectionAsync(cancellationToken);
 
