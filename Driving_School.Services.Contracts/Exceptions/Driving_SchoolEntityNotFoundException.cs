@@ -1,6 +1,4 @@
-﻿using Driving_School.Services.Contracts.Exceptions;
-
-namespace Driving_School.Services.Contracts.Exceptions
+﻿namespace Driving_School.Services.Contracts.Exceptions
 {
     /// <summary>
     /// Запрашиваемая сущность не найдена
