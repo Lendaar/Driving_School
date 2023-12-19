@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Driving_School.Context.Contracts\Driving_School.Context.Contracts.csproj" />
+    <ProjectReference Include="..\Driving_School.Shared\Driving_School.Shared.csproj" />
   </ItemGroup>
 
 </Project>
