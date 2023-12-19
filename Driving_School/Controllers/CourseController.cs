@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Models;
+using Driving_School.Api.ModelsRequest.Course;
+using Driving_School.Api.ModelsRequest.Place;
 using Driving_School.Services.Contracts.Interface;
+using Driving_School.Services.Contracts.RequestModels;
+using Driving_School.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Driving_School.Api.Controllers
 {
@@ -41,7 +46,7 @@ namespace Driving_School.Api.Controllers
         /// </summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(IEnumerable<CourseResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetById([Required] Guid id, CancellationToken cancellationToken)
         {
             var item = await courseService.GetByIdAsync(id, cancellationToken);
             if (item == null)
@@ -49,6 +54,41 @@ namespace Driving_School.Api.Controllers
                 return NotFound($"Не удалось найти курс с идентификатором {id}");
             }
             return Ok(mapper.Map<CourseResponse>(item));
+        }
+
+        /// <summary>
+        /// Создаёт новый курс
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(typeof(CourseResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(CreateCourseRequest request, CancellationToken cancellationToken)
+        {
+            var courseRequestModel = mapper.Map<CourseRequestModel>(request);
+            var result = await courseService.AddAsync(courseRequestModel, cancellationToken);
+            return Ok(mapper.Map<CourseResponse>(result));
+        }
+
+        /// <summary>
+        /// Редактирует имеющийся курс
+        /// </summary>
+        [HttpPut]
+        [ProducesResponseType(typeof(CourseResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Edit(CourseRequest request, CancellationToken cancellationToken)
+        {
+            var model = mapper.Map<CourseRequestModel>(request);
+            var result = await courseService.EditAsync(model, cancellationToken);
+            return Ok(mapper.Map<CourseResponse>(result));
+        }
+
+        /// <summary>
+        /// Удаляет имеющийся курс
+        /// </summary>
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        {
+            await courseService.DeleteAsync(id, cancellationToken);
+            return Ok();
         }
     }
 }

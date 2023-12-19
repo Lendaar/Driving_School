@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Models;
+using Driving_School.Api.ModelsRequest.Person;
+using Driving_School.Api.ModelsRequest.Place;
 using Driving_School.Services.Contracts.Interface;
+using Driving_School.Services.Contracts.RequestModels;
+using Driving_School.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Driving_School.Api.Controllers
 {
@@ -39,7 +44,7 @@ namespace Driving_School.Api.Controllers
         /// </summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetById([Required] Guid id, CancellationToken cancellationToken)
         {
             var item = await personService.GetByIdAsync(id, cancellationToken);
             if (item == null)
@@ -47,6 +52,41 @@ namespace Driving_School.Api.Controllers
                 return NotFound($"Не удалось найти персону с идентификатором {id}");
             }
             return Ok(mapper.Map<PersonResponse>(item));
+        }
+
+        /// <summary>
+        /// Создаёт новую Персону
+        /// </summary>
+        [HttpPost]
+        [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(CreatePersonRequest request, CancellationToken cancellationToken)
+        {
+            var personRequestModel = mapper.Map<PersonRequestModel>(request);
+            var result = await personService.AddAsync(personRequestModel, cancellationToken);
+            return Ok(mapper.Map<PersonResponse>(result));
+        }
+
+        /// <summary>
+        /// Редактирует имеющуюся Персону
+        /// </summary>
+        [HttpPut]
+        [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Edit(PersonRequest request, CancellationToken cancellationToken)
+        {
+            var model = mapper.Map<PersonRequestModel>(request);
+            var result = await personService.EditAsync(model, cancellationToken);
+            return Ok(mapper.Map<PersonResponse>(result));
+        }
+
+        /// <summary>
+        /// Удаляет имеющуюся Персону
+        /// </summary>
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+        {
+            await personService.DeleteAsync(id, cancellationToken);
+            return Ok();
         }
     }
 }

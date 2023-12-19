@@ -1,4 +1,4 @@
-﻿namespace Driving_School.Repositories.Anchors
+﻿namespace Driving_School.Repositories
 {
     public interface IRepositoriesAnchor
     {
