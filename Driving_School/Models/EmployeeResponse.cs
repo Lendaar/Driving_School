@@ -20,7 +20,7 @@ namespace Driving_School.Api.Models
         /// <summary>
         /// Тип работника
         /// </summary>
-        public EmployeeTypes EmployeeType { get; set; }
+        public string EmployeeType { get; set; } = string.Empty;
 
         /// <summary>
         /// Телефон
