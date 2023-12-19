@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
+using Driving_School.Api.Attribute;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Person;
-using Driving_School.Api.ModelsRequest.Place;
 using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.RequestModels;
-using Driving_School.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -32,7 +31,7 @@ namespace Driving_School.Api.Controllers
         /// Получить список всех Персон
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(IEnumerable<PersonResponse>))]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await personService.GetAllAsync(cancellationToken);
@@ -43,7 +42,8 @@ namespace Driving_School.Api.Controllers
         /// Получить Персону по идентификатору
         /// </summary>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(IEnumerable<PersonResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(PersonResponse))]
+        [ApiNotFound]
         public async Task<IActionResult> GetById([Required] Guid id, CancellationToken cancellationToken)
         {
             var item = await personService.GetByIdAsync(id, cancellationToken);
@@ -58,7 +58,8 @@ namespace Driving_School.Api.Controllers
         /// Создаёт новую Персону
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(PersonResponse))]
+        [ApiConflict]
         public async Task<IActionResult> Create(CreatePersonRequest request, CancellationToken cancellationToken)
         {
             var personRequestModel = mapper.Map<PersonRequestModel>(request);
@@ -70,7 +71,9 @@ namespace Driving_School.Api.Controllers
         /// Редактирует имеющуюся Персону
         /// </summary>
         [HttpPut]
-        [ProducesResponseType(typeof(PersonResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(PersonResponse))]
+        [ApiNotFound]
+        [ApiConflict]
         public async Task<IActionResult> Edit(PersonRequest request, CancellationToken cancellationToken)
         {
             var model = mapper.Map<PersonRequestModel>(request);
@@ -82,7 +85,9 @@ namespace Driving_School.Api.Controllers
         /// Удаляет имеющуюся Персону
         /// </summary>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ApiOk(typeof(PersonResponse))]
+        [ApiNotFound]
+        [ApiNotAcceptable]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             await personService.DeleteAsync(id, cancellationToken);

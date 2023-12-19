@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+using Driving_School.Api.Attribute;
 using Driving_School.Api.Models;
-using Driving_School.Services.Contracts.Interface;
 using Driving_School.Api.ModelsRequest.Employee;
+using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.RequestModels;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Driving_School.Api.Controllers
@@ -29,7 +30,7 @@ namespace Driving_School.Api.Controllers
         /// Получить список всех Работников
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<EmployeeResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(IEnumerable<EmployeeResponse>))]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await employeeService.GetAllAsync(cancellationToken);
@@ -40,7 +41,8 @@ namespace Driving_School.Api.Controllers
         /// Получить Работника по идентификатору
         /// </summary>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(IEnumerable<EmployeeResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(EmployeeResponse))]
+        [ApiNotFound]
         public async Task<IActionResult> GetById([Required]Guid id, CancellationToken cancellationToken)
         {
             var item = await employeeService.GetByIdAsync(id, cancellationToken);
@@ -55,7 +57,8 @@ namespace Driving_School.Api.Controllers
         /// Создаёт нового рабочего
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(EmployeeResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(EmployeeResponse))]
+        [ApiConflict]
         public async Task<IActionResult> Create(CreateEmployeeRequest request, CancellationToken cancellationToken)
         {
             var employeeRequestModel = mapper.Map<EmployeeRequestModel>(request);
@@ -67,7 +70,9 @@ namespace Driving_School.Api.Controllers
         /// Редактирует имеющищегося рабочего
         /// </summary>
         [HttpPut]
-        [ProducesResponseType(typeof(EmployeeResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(EmployeeResponse))]
+        [ApiNotFound]
+        [ApiConflict]
         public async Task<IActionResult> Edit(EmployeeRequest request, CancellationToken cancellationToken)
         {
             var model = mapper.Map<EmployeeRequestModel>(request);
@@ -79,7 +84,9 @@ namespace Driving_School.Api.Controllers
         /// Удаляет имеющийегося рабочего по id
         /// </summary>
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ApiOk(typeof(EmployeeResponse))]
+        [ApiNotFound]
+        [ApiNotAcceptable]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             await employeeService.DeleteAsync(id, cancellationToken);

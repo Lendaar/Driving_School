@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Driving_School.Api.Attribute;
 using Driving_School.Api.Models;
-using Driving_School.Services.Contracts.Interface;
-using AutoMapper;
 using Driving_School.Api.ModelsRequest.Place;
+using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.RequestModels;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Driving_School.Api.Controllers
@@ -29,7 +30,7 @@ namespace Driving_School.Api.Controllers
         /// Получить список всех Площадок
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<PlaceResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(IEnumerable<PlaceResponse>))]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await placeService.GetAllAsync(cancellationToken);
@@ -40,7 +41,8 @@ namespace Driving_School.Api.Controllers
         /// Получить Площадку по идентификатору
         /// </summary>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(IEnumerable<PlaceResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(PlaceResponse))]
+        [ApiNotFound]
         public async Task<IActionResult> GetById([Required]Guid id, CancellationToken cancellationToken)
         {
             var item = await placeService.GetByIdAsync(id, cancellationToken);
@@ -55,7 +57,8 @@ namespace Driving_School.Api.Controllers
         /// Создаёт новую Площадку
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(PlaceResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(PlaceResponse))]
+        [ApiConflict]
         public async Task<IActionResult> Create(CreatePlaceRequest request, CancellationToken cancellationToken)
         {
             var placeRequestModel = mapper.Map<PlaceRequestModel>(request);
@@ -67,7 +70,9 @@ namespace Driving_School.Api.Controllers
         /// Редактирует имеющуюся Площадку
         /// </summary>
         [HttpPut]
-        [ProducesResponseType(typeof(PlaceResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(PlaceResponse))]
+        [ApiNotFound]
+        [ApiConflict]
         public async Task<IActionResult> Edit(PlaceRequest request, CancellationToken cancellationToken)
         {
             var model = mapper.Map<PlaceRequestModel>(request);
@@ -79,7 +84,9 @@ namespace Driving_School.Api.Controllers
         /// Удаляет имеющуюся Площадку
         /// </summary>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ApiOk(typeof(PlaceResponse))]
+        [ApiNotFound]
+        [ApiNotAcceptable]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             await placeService.DeleteAsync(id, cancellationToken);

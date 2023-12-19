@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
+using Driving_School.Api.Attribute;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Course;
-using Driving_School.Api.ModelsRequest.Place;
 using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.RequestModels;
-using Driving_School.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,7 +33,7 @@ namespace Driving_School.Api.Controllers
         /// Получить список всех курсов
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<CourseResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(IEnumerable<CourseResponse>))]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await courseService.GetAllAsync(cancellationToken);
@@ -45,7 +44,8 @@ namespace Driving_School.Api.Controllers
         /// Получить курс по идентификатору
         /// </summary>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(IEnumerable<CourseResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(CourseResponse))]
+        [ApiNotFound]
         public async Task<IActionResult> GetById([Required] Guid id, CancellationToken cancellationToken)
         {
             var item = await courseService.GetByIdAsync(id, cancellationToken);
@@ -60,7 +60,8 @@ namespace Driving_School.Api.Controllers
         /// Создаёт новый курс
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(CourseResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(CourseResponse))]
+        [ApiConflict]
         public async Task<IActionResult> Create(CreateCourseRequest request, CancellationToken cancellationToken)
         {
             var courseRequestModel = mapper.Map<CourseRequestModel>(request);
@@ -72,7 +73,9 @@ namespace Driving_School.Api.Controllers
         /// Редактирует имеющийся курс
         /// </summary>
         [HttpPut]
-        [ProducesResponseType(typeof(CourseResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(CourseResponse))]
+        [ApiNotFound]
+        [ApiConflict]
         public async Task<IActionResult> Edit(CourseRequest request, CancellationToken cancellationToken)
         {
             var model = mapper.Map<CourseRequestModel>(request);
@@ -84,7 +87,9 @@ namespace Driving_School.Api.Controllers
         /// Удаляет имеющийся курс
         /// </summary>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ApiOk(typeof(CourseResponse))]
+        [ApiNotFound]
+        [ApiNotAcceptable]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             await courseService.DeleteAsync(id, cancellationToken);
