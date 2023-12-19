@@ -1,5 +1,4 @@
 ﻿using Driving_School.Services.Contracts.Enums;
-using Driving_School.Services.Contracts.Models;
 
 namespace Driving_School.Services.Contracts.RequestModels
 {
@@ -18,7 +17,7 @@ namespace Driving_School.Services.Contracts.RequestModels
         /// <summary>
         /// Тип работника
         /// </summary>
-        public EmployeeTypes EmployeeType { get; set; }
+        public EmployeeTypes EmployeeType { get; set; } = EmployeeTypes.Student;
 
         /// <summary>
         /// Адрес электронной почты

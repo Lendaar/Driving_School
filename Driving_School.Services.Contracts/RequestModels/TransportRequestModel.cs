@@ -25,6 +25,6 @@ namespace Driving_School.Services.Contracts.RequestModels
         /// <summary>
         /// Тип документов
         /// </summary>
-        public GSBTypes GSBType { get; set; }
+        public GSBTypes GSBType { get; set; } = GSBTypes.Mechanical;
     }
 }
