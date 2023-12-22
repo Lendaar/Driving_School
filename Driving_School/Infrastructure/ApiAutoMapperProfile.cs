@@ -38,15 +38,19 @@ namespace Driving_School.Api.Infrastructure
             CreateMap<PersonRequest, PersonRequestModel>(MemberList.Destination);
 
             CreateMap<EmployeeModel, EmployeeResponse>(MemberList.Destination)
-            .ForMember(x => x.FIO, opt => opt.MapFrom(x => $"{x.Person.LastName} {x.Person.FirstName} {x.Person.Patronymic ?? string.Empty}"))
-            .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Person.Phone));
+                .ForMember(x => x.FIO, opt => opt.MapFrom(x => x.Person != null
+                    ? $"{x.Person.LastName} {x.Person.FirstName} {x.Person.Patronymic}"
+                    : string.Empty))
+                .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Person != null
+                    ? x.Person.Phone
+                    : string.Empty));
 
             CreateMap<CreateEmployeeRequest, EmployeeRequestModel>(MemberList.Destination);
             CreateMap<EmployeeRequest, EmployeeRequestModel>(MemberList.Destination);
 
             CreateMap<LessonModel, LessonResponse>(MemberList.Destination)
-            .ForMember(x => x.InstructorName, opt => opt.MapFrom(x => $"{x.Instructor.Person.LastName} {x.Instructor.Person.FirstName} {x.Instructor.Person.Patronymic ?? string.Empty}"))
-            .ForMember(x => x.StudentName, opt => opt.MapFrom(x => $"{x.Student.Person.LastName} {x.Student.Person.FirstName} {x.Student.Person.Patronymic ?? string.Empty}"))
+            .ForMember(x => x.InstructorName, opt => opt.MapFrom(x => $"{x.Instructor.LastName} {x.Instructor.FirstName} {x.Instructor.Patronymic ?? string.Empty}"))
+            .ForMember(x => x.StudentName, opt => opt.MapFrom(x => $"{x.Student.LastName} {x.Student.FirstName} {x.Student.Patronymic ?? string.Empty}"))
             .ForMember(x => x.PlaceName, opt => opt.MapFrom(x => x.Place.Name))
             .ForMember(x => x.TransportName, opt => opt.MapFrom(x => x.Transport.Name))
             .ForMember(x => x.CourseName, opt => opt.MapFrom(x => x.Course.Name));

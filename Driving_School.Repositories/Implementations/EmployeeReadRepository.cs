@@ -32,5 +32,16 @@ namespace Driving_School.Repositories.Implementations
                 .ByIds(ids)
                 .OrderBy(x => x.Person.LastName)
                 .ToDictionaryAsync(key => key.Id, cancellation);
+
+        public Task<Dictionary<Guid, Person?>> GetPersonByEmployeeIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation)
+            => reader.Read<Employee>()
+                .NotDeletedAt()
+                .ByIds(ids)
+                .Select(x => new
+                {
+                    x.Id,
+                    x.Person,
+                })
+                .ToDictionaryAsync(key => key.Id, val => val.Person, cancellation);
     }
 }
