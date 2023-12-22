@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Course;
 using Driving_School.Services.Contracts.Interface;
@@ -17,15 +18,17 @@ namespace Driving_School.Api.Controllers
     [ApiExplorerSettings(GroupName = "Course")]
     public class CourseController : ControllerBase
     {
-        private readonly ICourseService courseService; 
+        private readonly ICourseService courseService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
         /// <summary>
         /// Инициализирует новый экземпляр <see cref="CourseController"/>
         /// </summary>
-        public CourseController(ICourseService courseService, IMapper mapper)
+        public CourseController(ICourseService courseService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.courseService = courseService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -64,6 +67,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Create(CreateCourseRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var courseRequestModel = mapper.Map<CourseRequestModel>(request);
             var result = await courseService.AddAsync(courseRequestModel, cancellationToken);
             return Ok(mapper.Map<CourseResponse>(result));
@@ -78,6 +82,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Edit(CourseRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<CourseRequestModel>(request);
             var result = await courseService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<CourseResponse>(result));

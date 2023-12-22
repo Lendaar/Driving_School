@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Employee;
 using Driving_School.Services.Contracts.Interface;
@@ -18,11 +19,13 @@ namespace Driving_School.Api.Controllers
     public class EmpoyeeController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public EmpoyeeController(IEmployeeService employeeService, IMapper mapper)
+        public EmpoyeeController(IEmployeeService employeeService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.employeeService = employeeService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -61,6 +64,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Create(CreateEmployeeRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var employeeRequestModel = mapper.Map<EmployeeRequestModel>(request);
             var result = await employeeService.AddAsync(employeeRequestModel, cancellationToken);
             return Ok(mapper.Map<EmployeeResponse>(result));
@@ -75,6 +79,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Edit(EmployeeRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<EmployeeRequestModel>(request);
             var result = await employeeService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<EmployeeResponse>(result));

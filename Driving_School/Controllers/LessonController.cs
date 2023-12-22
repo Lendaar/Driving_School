@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Lesson;
 using Driving_School.Services.Contracts.Interface;
@@ -18,11 +19,13 @@ namespace Driving_School.Api.Controllers
     public class LessonController : Controller
     {
         private readonly ILessonService lessonService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public LessonController(ILessonService lessonService, IMapper mapper)
+        public LessonController(ILessonService lessonService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.lessonService = lessonService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -61,6 +64,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Create(CreateLessonRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var lessonRequestModel = mapper.Map<LessonRequestModel>(request);
             var result = await lessonService.AddAsync(lessonRequestModel, cancellationToken);
             return Ok(mapper.Map<LessonResponse>(result));
@@ -75,6 +79,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Edit(LessonRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<LessonRequestModel>(request);
             var result = await lessonService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<LessonResponse>(result));

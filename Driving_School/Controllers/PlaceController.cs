@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Place;
 using Driving_School.Services.Contracts.Interface;
@@ -18,11 +19,13 @@ namespace Driving_School.Api.Controllers
     public class PlaceController : Controller
     {
         private readonly IPlaceService placeService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public PlaceController(IPlaceService placeService, IMapper mapper)
+        public PlaceController(IPlaceService placeService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.placeService = placeService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -61,6 +64,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Create(CreatePlaceRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var placeRequestModel = mapper.Map<PlaceRequestModel>(request);
             var result = await placeService.AddAsync(placeRequestModel, cancellationToken);
             return Ok(mapper.Map<PlaceResponse>(result));
@@ -75,6 +79,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Edit(PlaceRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<PlaceRequestModel>(request);
             var result = await placeService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<PlaceResponse>(result));

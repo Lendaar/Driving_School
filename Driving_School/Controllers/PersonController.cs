@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Person;
 using Driving_School.Services.Contracts.Interface;
@@ -19,11 +20,13 @@ namespace Driving_School.Api.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonService personService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public PersonController(IPersonService personService, IMapper mapper)
+        public PersonController(IPersonService personService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.personService = personService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -62,6 +65,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Create(CreatePersonRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var personRequestModel = mapper.Map<PersonRequestModel>(request);
             var result = await personService.AddAsync(personRequestModel, cancellationToken);
             return Ok(mapper.Map<PersonResponse>(result));
@@ -76,6 +80,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Edit(PersonRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<PersonRequestModel>(request);
             var result = await personService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<PersonResponse>(result));

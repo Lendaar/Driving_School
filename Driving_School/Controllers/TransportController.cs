@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
 using Driving_School.Api.ModelsRequest.Transport;
 using Driving_School.Services.Contracts.Interface;
@@ -18,11 +19,13 @@ namespace Driving_School.Api.Controllers
     public class TransportController : ControllerBase
     {
         private readonly ITransportService transportService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public TransportController(ITransportService transportService, IMapper mapper)
+        public TransportController(ITransportService transportService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.transportService = transportService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -61,6 +64,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Create(CreateTransportRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var transportRequestModel = mapper.Map<TransportRequestModel>(request);
             var result = await transportService.AddAsync(transportRequestModel, cancellationToken);
             return Ok(mapper.Map<TransportResponse>(result));
@@ -75,6 +79,7 @@ namespace Driving_School.Api.Controllers
         [ApiConflict]
         public async Task<IActionResult> Edit(TransportRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<TransportRequestModel>(request);
             var result = await transportService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<TransportResponse>(result));
