@@ -1,4 +1,5 @@
 ﻿using Driving_School.Api.Infrastructure;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Common;
 using Driving_School.Common.Entity.InterfaceDB;
 using Driving_School.Context;
@@ -14,6 +15,8 @@ namespace Driving_School.Infrastructure
         {
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IDbWriterContext, DbWriterContext>();
+            services.AddTransient<IApiValidatorService, ApiValidatorService>();
+
             services.RegisterAutoMapperProfile<ApiAutoMapperProfile>();
 
             services.RegisterModule<ServiceModule>();

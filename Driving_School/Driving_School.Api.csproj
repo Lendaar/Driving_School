@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="3.1.0" />
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Driving_School.Common.Entity\Driving_School.Common.Entity.csproj" />
     <ProjectReference Include="..\Driving_School.Common\Driving_School.Common.csproj" />
     <ProjectReference Include="..\Driving_School.Context\Driving_School.Context.csproj" />
     <ProjectReference Include="..\Driving_School.Repositories\Driving_School.Repositories.csproj" />

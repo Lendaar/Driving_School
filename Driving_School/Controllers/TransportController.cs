@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Driving_School.Api.Attribute;
+using Driving_School.Api.Infrastructures.Validator;
 using Driving_School.Api.Models;
-using Driving_School.Api.ModelsRequest.Place;
 using Driving_School.Api.ModelsRequest.Transport;
 using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.RequestModels;
-using Driving_School.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,11 +19,13 @@ namespace Driving_School.Api.Controllers
     public class TransportController : ControllerBase
     {
         private readonly ITransportService transportService;
+        private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public TransportController(ITransportService transportService, IMapper mapper)
+        public TransportController(ITransportService transportService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.transportService = transportService;
+            this.validatorService = validatorService;
             this.mapper = mapper;
         }
 
@@ -31,7 +33,7 @@ namespace Driving_School.Api.Controllers
         /// Получить список всех Транспортных средств
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<TransportResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(IEnumerable<TransportResponse>))]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
             var result = await transportService.GetAllAsync(cancellationToken);
@@ -42,7 +44,8 @@ namespace Driving_School.Api.Controllers
         /// Получить Транспортное средство по идентификатору
         /// </summary>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(IEnumerable<TransportResponse>), StatusCodes.Status200OK)]
+        [ApiOk(typeof(TransportResponse))]
+        [ApiNotFound]
         public async Task<IActionResult> GetById([Required] Guid id, CancellationToken cancellationToken)
         {
             var item = await transportService.GetByIdAsync(id, cancellationToken);
@@ -57,9 +60,11 @@ namespace Driving_School.Api.Controllers
         /// Создаёт новое Транспортное средство
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(TransportResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(TransportResponse))]
+        [ApiConflict]
         public async Task<IActionResult> Create(CreateTransportRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var transportRequestModel = mapper.Map<TransportRequestModel>(request);
             var result = await transportService.AddAsync(transportRequestModel, cancellationToken);
             return Ok(mapper.Map<TransportResponse>(result));
@@ -69,9 +74,12 @@ namespace Driving_School.Api.Controllers
         /// Редактирует имеющееся Транспортное средство
         /// </summary>
         [HttpPut]
-        [ProducesResponseType(typeof(TransportResponse), StatusCodes.Status200OK)]
+        [ApiOk(typeof(TransportResponse))]
+        [ApiNotFound]
+        [ApiConflict]
         public async Task<IActionResult> Edit(TransportRequest request, CancellationToken cancellationToken)
         {
+            await validatorService.ValidateAsync(request, cancellationToken);
             var model = mapper.Map<TransportRequestModel>(request);
             var result = await transportService.EditAsync(model, cancellationToken);
             return Ok(mapper.Map<TransportResponse>(result));
@@ -81,7 +89,9 @@ namespace Driving_School.Api.Controllers
         /// Удаляет имеющееся Транспортное средство
         /// </summary>
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ApiOk(typeof(TransportResponse))]
+        [ApiNotFound]
+        [ApiNotAcceptable]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
             await transportService.DeleteAsync(id, cancellationToken);
