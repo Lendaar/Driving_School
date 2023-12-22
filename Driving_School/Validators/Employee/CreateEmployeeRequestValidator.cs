@@ -26,11 +26,6 @@ namespace Driving_School.Api.Validators.Employee
                .EmailAddress()
                .WithMessage("Требуется действительная почта!");
 
-            RuleFor(x => x.Experience)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Стаж не должен быть пустой или null");
-
             RuleFor(x => x.Number)
                 .NotNull()
                 .NotEmpty()
