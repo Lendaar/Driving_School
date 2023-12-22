@@ -35,8 +35,21 @@ namespace Driving_School.Services.Implementations
 
         async Task<IEnumerable<EmployeeModel>> IEmployeeService.GetAllAsync(CancellationToken cancellationToken)
         {
-            var result = await employeeReadRepository.GetAllAsync(cancellationToken);
-            return mapper.Map<IEnumerable<EmployeeModel>>(result);
+            var employees = await employeeReadRepository.GetAllAsync(cancellationToken);
+            var persons = await personReadRepository.GetByIdsAsync(employees.Select(x => x.PersonId).Distinct(), cancellationToken);
+            var result = new List<EmployeeModel>();
+            foreach (var employee in employees)
+            {
+                if (!persons.TryGetValue(employee.PersonId, out var person))
+                {
+                    continue;
+                }
+                var empl = mapper.Map<EmployeeModel>(employee);
+                empl.Person = mapper.Map<PersonModel>(person);
+                result.Add(empl);
+            }
+
+            return result;
         }
 
         async Task<EmployeeModel?> IEmployeeService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -46,8 +59,10 @@ namespace Driving_School.Services.Implementations
             {
                 return null;
             }
-            
-            return mapper.Map<EmployeeModel>(item);
+            var person = await personReadRepository.GetByIdAsync(item.PersonId, cancellationToken);
+            var employee = mapper.Map<EmployeeModel>(item);
+            employee.Person = person != null ? mapper.Map<PersonModel>(person) : null;
+            return employee;
         }
 
         async Task<EmployeeModel> IEmployeeService.AddAsync(EmployeeRequestModel employeeRequestModel, CancellationToken cancellationToken)

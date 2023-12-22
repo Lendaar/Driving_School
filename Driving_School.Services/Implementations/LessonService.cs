@@ -8,6 +8,7 @@ using Driving_School.Services.Contracts.Exceptions;
 using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Contracts.Models;
 using Driving_School.Services.Contracts.RequestModels;
+using System.Xml;
 
 namespace Driving_School.Services.Implementations
 {
@@ -51,14 +52,15 @@ namespace Driving_School.Services.Implementations
             var placeId = lessons.Select(x => x.PlaceId).Distinct();
 
             var transports = await transportReadRepository.GetByIdsAsync(transportId, cancellationToken);
-            var instructors = await employeeReadRepository.GetByIdsAsync(instructorId, cancellationToken);
-            var students = await employeeReadRepository.GetByIdsAsync(studentId, cancellationToken);
+            var instructors = await employeeReadRepository.GetPersonByEmployeeIdsAsync(instructorId, cancellationToken);
+            var students = await employeeReadRepository.GetPersonByEmployeeIdsAsync(studentId, cancellationToken);
             var courses = await courseReadRepository.GetByIdsAsync(courseId, cancellationToken);
             var places = await placeReadRepository.GetByIdsAsync(placeId, cancellationToken);
 
             var listLessonModel = new List<LessonModel>();
             foreach (var lessonItem in lessons)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 if (!transports.TryGetValue(lessonItem.TransportId, out var transport)) continue;
                 if (!instructors.TryGetValue(lessonItem.InstructorId, out var instructor)) continue;
                 if (!students.TryGetValue(lessonItem.StudentId, out var student)) continue;
@@ -68,8 +70,8 @@ namespace Driving_School.Services.Implementations
                 var lessonTable = mapper.Map<LessonModel>(lessonItem);
 
                 lessonTable.Transport = mapper.Map<TransportModel>(transport);
-                lessonTable.Instructor = mapper.Map<EmployeeModel>(instructor);
-                lessonTable.Student = mapper.Map<EmployeeModel>(student);
+                lessonTable.Instructor = mapper.Map<PersonModel>(instructor);
+                lessonTable.Student = mapper.Map<PersonModel>(student);
                 lessonTable.Course = mapper.Map<CourseModel>(course);
                 lessonTable.Place = mapper.Map<PlaceModel>(place);
                 listLessonModel.Add(lessonTable);
@@ -85,18 +87,24 @@ namespace Driving_School.Services.Implementations
                 return null;
             }
             var transport = await transportReadRepository.GetByIdAsync(item.TransportId, cancellationToken);
-            var instructor = await employeeReadRepository.GetByIdAsync(item.InstructorId, cancellationToken);
-            var student = await employeeReadRepository.GetByIdAsync(item.StudentId, cancellationToken);
             var course = await courseReadRepository.GetByIdAsync(item.CourceId, cancellationToken);
             var place = await placeReadRepository.GetByIdAsync(item.PlaceId, cancellationToken);
 
             var lesson = mapper.Map<LessonModel>(item);
 
+            var instructorDictionary = await employeeReadRepository.GetPersonByEmployeeIdsAsync(new[] { item.InstructorId }, cancellationToken);
+            lesson.Instructor = instructorDictionary.TryGetValue(item.InstructorId, out var instructor)
+              ? mapper.Map<PersonModel>(instructor)
+              : null;
+
+            var studentDictionary = await employeeReadRepository.GetPersonByEmployeeIdsAsync(new[] { item.StudentId }, cancellationToken);
+            lesson.Student = studentDictionary.TryGetValue(item.StudentId, out var student)
+              ? mapper.Map<PersonModel>(student)
+              : null;
+
             lesson.Transport = mapper.Map<TransportModel>(transport);
-            lesson.Student = mapper.Map<EmployeeModel>(student);
             lesson.Place = mapper.Map<PlaceModel>(place);
             lesson.Course = mapper.Map<CourseModel>(course);
-            lesson.Instructor = mapper.Map<EmployeeModel>(instructor);
             return lesson;
         }
 

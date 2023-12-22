@@ -13,7 +13,8 @@ namespace Driving_School.Services.Automappers
     {
         public ServiceProfile()
         {
-            CreateMap<Employee, EmployeeModel>(MemberList.Destination);
+            CreateMap<Employee, EmployeeModel>(MemberList.Destination)
+                .ForMember(x => x.Person, next => next.Ignore());
 
             CreateMap<Transport, TransportModel>(MemberList.Destination);
 
