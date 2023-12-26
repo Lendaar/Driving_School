@@ -23,6 +23,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<Employee?> IEmployeeReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
              => reader.Read<Employee>()
+                .NotDeletedAt()
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);
 

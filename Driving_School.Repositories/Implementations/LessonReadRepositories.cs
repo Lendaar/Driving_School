@@ -23,6 +23,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<Lesson?> ILessonReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
              => reader.Read<Lesson>()
+                .NotDeletedAt()
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);
     }
