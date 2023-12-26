@@ -23,6 +23,7 @@ namespace Driving_School.Repositories.Implementations
 
         Task<Transport?> ITransportReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
              => reader.Read<Transport>()
+                .NotDeletedAt()
                 .ById(id)
                 .FirstOrDefaultAsync(cancellationToken);
 
