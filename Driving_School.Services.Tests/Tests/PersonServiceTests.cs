@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Driving_School.Context.Contracts.Models;
 using Driving_School.Context.Tests;
 using Driving_School.Repositories.Implementations;
 using Driving_School.Services.Automappers;
+using Driving_School.Services.Contracts.Exceptions;
 using Driving_School.Services.Contracts.Interface;
 using Driving_School.Services.Implementations;
 using FluentAssertions;
@@ -41,10 +43,11 @@ namespace Driving_School.Services.Tests.Tests
             var id = Guid.NewGuid();
 
             // Act
-            var result = await personService.GetByIdAsync(id, CancellationToken);
+            Func<Task> act = () => personService.GetByIdAsync(id, CancellationToken);
 
             // Assert
-            result.Should().BeNull();
+            await act.Should().ThrowAsync<Driving_SchoolEntityNotFoundException<Person>>()
+                .WithMessage($"*{id}*");
         }
 
         /// <summary>
