@@ -57,7 +57,7 @@ namespace Driving_School.Services.Implementations
             var item = await employeeReadRepository.GetByIdAsync(id, cancellationToken);
             if (item == null)
             {
-                return null;
+                throw new Driving_SchoolEntityNotFoundException<Employee>(id);
             }
             var person = await personReadRepository.GetByIdAsync(item.PersonId, cancellationToken);
             var employee = mapper.Map<EmployeeModel>(item);
