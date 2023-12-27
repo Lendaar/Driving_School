@@ -1,4 +1,5 @@
 ﻿using Driving_School.Common.Entity.InterfaceDB;
+using Driving_School.Context.Contracts.Enums;
 using Driving_School.Context.Contracts.Models;
 using Driving_School.Repositories.Contracts.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -44,5 +45,23 @@ namespace Driving_School.Repositories.Implementations
                     x.Person,
                 })
                 .ToDictionaryAsync(key => key.Id, val => val.Person, cancellation);
+
+        Task<bool> IEmployeeReadRepository.AnyByIdAsync(Guid id, CancellationToken cancellationToken)
+             => reader.Read<Employee>()
+                 .NotDeletedAt()
+                 .ById(id)
+                 .AnyAsync(cancellationToken);
+
+        Task<bool> IEmployeeReadRepository.AnyByIdWithInstructorAsync(Guid id, CancellationToken cancellationToken)
+               => reader.Read<Employee>()
+                   .NotDeletedAt()
+                   .ById(id)
+                   .AnyAsync(x => x.EmployeeType == EmployeeTypes.Instructor, cancellationToken);
+
+        Task<bool> IEmployeeReadRepository.AnyByIdWithStudentAsync(Guid id, CancellationToken cancellationToken)
+               => reader.Read<Employee>()
+                   .NotDeletedAt()
+                   .ById(id)
+                   .AnyAsync(x => x.EmployeeType == EmployeeTypes.Student, cancellationToken);
     }
 }
