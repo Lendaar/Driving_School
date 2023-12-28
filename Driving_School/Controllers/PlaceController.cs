@@ -16,7 +16,7 @@ namespace Driving_School.Api.Controllers
     [ApiController]
     [Route("[controller]")]
     [ApiExplorerSettings(GroupName = "Place")]
-    public class PlaceController : Controller
+    public class PlaceController : ControllerBase
     {
         private readonly IPlaceService placeService;
         private readonly IApiValidatorService validatorService;

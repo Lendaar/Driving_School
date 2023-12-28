@@ -16,7 +16,7 @@ namespace Driving_School.Api.Controllers
     [ApiController]
     [Route("[controller]")]
     [ApiExplorerSettings(GroupName = "Lesson")]
-    public class LessonController : Controller
+    public class LessonController : ControllerBase
     {
         private readonly ILessonService lessonService;
         private readonly IApiValidatorService validatorService;
