@@ -135,5 +135,57 @@ namespace Driving_School.Repositories.Tests.Tests
                 .And.ContainKey(target1.Id)
                 .And.ContainKey(target4.Id);
         }
+
+        /// <summary>
+        /// Поиск транспорта в коллекции по идентификатору (true)
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullEntityReturnTrue()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Transport();
+            await Context.Transports.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await transportReadRepository.AnyByIdAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        /// <summary>
+        /// Поиск транспорта в коллекции по идентификатору (false)
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullEntityReturnFalse()
+        {
+            //Arrange
+            var target1 = Guid.NewGuid();
+
+            // Act
+            var result = await transportReadRepository.AnyByIdAsync(target1, CancellationToken);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        /// <summary>
+        /// Поиск удаленного транспорта в коллекции по идентификатору
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullDeletedEntityReturnFalse()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Transport(x => x.DeletedAt = DateTimeOffset.UtcNow);
+            await Context.Transports.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await transportReadRepository.AnyByIdAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeFalse();
+        }
     }
 }

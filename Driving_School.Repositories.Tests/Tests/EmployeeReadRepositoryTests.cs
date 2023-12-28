@@ -135,5 +135,129 @@ namespace Driving_School.Repositories.Tests.Tests
                 .And.ContainKey(target1.Id)
                 .And.ContainKey(target4.Id);
         }
+
+        /// <summary>
+        /// Поиск работника в коллекции по идентификатору (true)
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullEntityReturnTrue()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Employee();
+            await Context.Employees.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        /// <summary>
+        /// Поиск работника в коллекции по идентификатору (false)
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullEntityReturnFalse()
+        {
+            //Arrange
+            var target1 = Guid.NewGuid();
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdAsync(target1, CancellationToken);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        /// <summary>
+        /// Поиск удаленного работника в коллекции по идентификатору
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullDeletedEntityReturnFalse()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Employee(x => x.DeletedAt = DateTimeOffset.UtcNow);
+            await Context.Employees.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        /// <summary>
+        /// Поиск работника в коллекции по идентификатору и типу Instructor (true)
+        /// </summary>
+        public async Task IsNotNullIntstructorReturnTrue()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Employee();
+            target1.EmployeeType = Driving_School.Context.Contracts.Enums.EmployeeTypes.Instructor;
+            await Context.Employees.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdWithInstructorAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        /// <summary>
+        /// Поиск работника в коллекции по идентификатору и типу Instructor (false)
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullIntstructorReturnFalse()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Employee();
+            await Context.Employees.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdWithInstructorAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        /// <summary>
+        /// Поиск работника в коллекции по идентификатору и типу Student (true)
+        /// </summary>
+        public async Task IsNotNullStudentReturnTrue()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Employee();
+            await Context.Employees.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdWithStudentAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        /// <summary>
+        /// Поиск работника в коллекции по идентификатору и типу Student (false)
+        /// </summary>
+        [Fact]
+        public async Task IsNotNullStudentReturnFalse()
+        {
+            //Arrange
+            var target1 = TestDataGenerator.Employee();
+            target1.EmployeeType = Driving_School.Context.Contracts.Enums.EmployeeTypes.Instructor;
+            await Context.Employees.AddAsync(target1);
+            await Context.SaveChangesAsync(CancellationToken);
+
+            // Act
+            var result = await employeeReadRepository.AnyByIdWithStudentAsync(target1.Id, CancellationToken);
+
+            // Assert
+            result.Should().BeFalse();
+        }
     }
 }
