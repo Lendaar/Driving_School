@@ -20,5 +20,10 @@ namespace Driving_School.Repositories.Contracts.Interface
         /// Получить список <see cref="Person"/> по идентификаторам
         /// </summary>
         Task<Dictionary<Guid, Person>> GetByIdsAsync(IEnumerable<Guid> ids, CancellationToken cancellation);
+
+        /// <summary>
+        /// Проверка есть ли <see cref="Person"/> по указанному id
+        /// </summary>
+        Task<bool> AnyByIdAsync(Guid id, CancellationToken cancellationToken);
     }
 }

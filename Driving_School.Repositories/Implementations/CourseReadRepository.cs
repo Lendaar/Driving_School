@@ -21,7 +21,6 @@ namespace Driving_School.Repositories.Implementations
                 .OrderBy(x => x.Name)
                 .ToReadOnlyCollectionAsync(cancellationToken);
 
-
         Task<Course?> ICourseReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
              => reader.Read<Course>()
                 .NotDeletedAt()
@@ -34,5 +33,11 @@ namespace Driving_School.Repositories.Implementations
                 .ByIds(ids)
                 .OrderBy(x => x.Name)
                 .ToDictionaryAsync(key => key.Id, cancellation);
+
+        Task<bool> ICourseReadRepository.AnyByIdAsync(Guid id, CancellationToken cancellationToken)
+             => reader.Read<Course>()
+                 .NotDeletedAt()
+                 .ById(id)
+                 .AnyAsync(cancellationToken);
     }
 }

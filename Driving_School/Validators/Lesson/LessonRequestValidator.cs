@@ -40,8 +40,8 @@ namespace Driving_School.Api.Validators.Lesson
                 .WithMessage("Площадка не должна быть пустым или null")
                 .MustAsync(async (id, CancellationToken) =>
                 {
-                    var place = await placeReadRepository.GetByIdAsync(id, CancellationToken);
-                    return place != null;
+                    var placeExists = await placeReadRepository.AnyByIdAsync(id, CancellationToken);
+                    return placeExists;
                 })
                 .WithMessage("Такой площадки не существует!");
 
@@ -51,8 +51,8 @@ namespace Driving_School.Api.Validators.Lesson
                 .WithMessage("Транспорт не должен быть пустым или null")
                 .MustAsync(async (id, CancellationToken) =>
                 {
-                    var transport = await transportReadRepository.GetByIdAsync(id, CancellationToken);
-                    return transport != null;
+                    var transportExists = await transportReadRepository.AnyByIdAsync(id, CancellationToken);
+                    return transportExists;
                 })
                 .WithMessage("Такого транспорта не существует!");
 
@@ -62,10 +62,11 @@ namespace Driving_School.Api.Validators.Lesson
                 .WithMessage("Курс не должен быть пустым или null")
                 .MustAsync(async (id, CancellationToken) =>
                 {
-                    var course = await courseReadRepository.GetByIdAsync(id, CancellationToken);
-                    return course != null;
+                    var courseExists = await courseReadRepository.AnyByIdAsync(id, CancellationToken);
+                    return courseExists;
                 })
                 .WithMessage("Такого курса не существует!");
+
 
             RuleFor(x => x.Instructor)
                .NotNull()
@@ -73,18 +74,14 @@ namespace Driving_School.Api.Validators.Lesson
                .WithMessage("Инструктор не должен быть пустым или null")
                .MustAsync(async (id, CancellationToken) =>
                {
-                   var instructor = await employeeReadRepository.GetByIdAsync(id, CancellationToken);
-                   return instructor != null;
+                   var instructorExists = await employeeReadRepository.AnyByIdAsync(id, CancellationToken);
+                   return instructorExists;
                })
                .WithMessage("Такого инструктора не существует!")
                .MustAsync(async (id, CancellationToken) =>
                {
-                   var instructor = await employeeReadRepository.GetByIdAsync(id, CancellationToken);
-                   if (instructor == null)
-                   {
-                       return false;
-                   }
-                   return instructor!.EmployeeType == EmployeeTypes.Instructor;
+                   var employeeExistsWithInstructor = await employeeReadRepository.AnyByIdWithInstructorAsync(id, CancellationToken);
+                   return employeeExistsWithInstructor;
                })
                 .WithMessage("Работник не соответствует категории: Инструктор!");
 
@@ -94,18 +91,14 @@ namespace Driving_School.Api.Validators.Lesson
                .WithMessage("Студент не должен быть пустым или null")
                .MustAsync(async (id, CancellationToken) =>
                {
-                   var student = await employeeReadRepository.GetByIdAsync(id, CancellationToken);
-                   return student != null;
+                   var studentExists = await employeeReadRepository.AnyByIdAsync(id, CancellationToken);
+                   return studentExists;
                })
                .WithMessage("Такого студента не существует!")
                .MustAsync(async (id, CancellationToken) =>
                {
-                   var student = await employeeReadRepository.GetByIdAsync(id, CancellationToken);
-                   if (student == null)
-                   {
-                       return false;
-                   }
-                   return student!.EmployeeType == EmployeeTypes.Student;
+                   var employeeExistsWithStudent = await employeeReadRepository.AnyByIdWithStudentAsync(id, CancellationToken);
+                   return employeeExistsWithStudent;
                })
                 .WithMessage("Работник не соответствует категории: Студент!");
         }

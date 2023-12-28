@@ -40,7 +40,7 @@ namespace Driving_School.Services.Implementations
             var item = await placeReadRepository.GetByIdAsync(id, cancellationToken);
             if (item == null)
             {
-                return null;
+                throw new Driving_SchoolEntityNotFoundException<Place>(id);
             }
 
             return mapper.Map<PlaceModel>(item);

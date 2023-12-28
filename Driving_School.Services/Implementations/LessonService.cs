@@ -84,7 +84,7 @@ namespace Driving_School.Services.Implementations
             var item = await lessonReadRepository.GetByIdAsync(id, cancellationToken);
             if (item == null)
             {
-                return null;
+                throw new Driving_SchoolEntityNotFoundException<Lesson>(id);
             }
             var transport = await transportReadRepository.GetByIdAsync(item.TransportId, cancellationToken);
             var course = await courseReadRepository.GetByIdAsync(item.CourceId, cancellationToken);

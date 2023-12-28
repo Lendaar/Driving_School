@@ -39,8 +39,8 @@ namespace Driving_School.Api.Validators.Employee
                 .WithMessage("Персона не должна быть пустым или null")
                 .MustAsync(async (id, CancellationToken) =>
                 {
-                    var person = await personReadRepository.GetByIdAsync(id, CancellationToken);
-                    return person != null;
+                    var personExists = await personReadRepository.AnyByIdAsync(id, CancellationToken);
+                    return personExists;
                 })
                 .WithMessage("Такой персоны не существует!");
         }

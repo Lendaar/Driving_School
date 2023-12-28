@@ -33,5 +33,11 @@ namespace Driving_School.Repositories.Implementations
             .ByIds(ids)
             .OrderBy(x => x.LastName)
             .ToDictionaryAsync(key => key.Id, cancellation);
+
+        Task<bool> IPersonReadRepository.AnyByIdAsync(Guid id, CancellationToken cancellationToken)
+            => reader.Read<Person>()
+                .NotDeletedAt()
+                .ById(id)
+                .AnyAsync(cancellationToken);
     }
 }
