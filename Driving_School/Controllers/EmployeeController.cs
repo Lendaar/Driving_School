@@ -16,13 +16,13 @@ namespace Driving_School.Api.Controllers
     [ApiController]
     [Route("[controller]")]
     [ApiExplorerSettings(GroupName = "Employee")]
-    public class EmpoyeeController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
         private readonly IApiValidatorService validatorService;
         private readonly IMapper mapper;
 
-        public EmpoyeeController(IEmployeeService employeeService, IMapper mapper, IApiValidatorService validatorService)
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper, IApiValidatorService validatorService)
         {
             this.employeeService = employeeService;
             this.validatorService = validatorService;
