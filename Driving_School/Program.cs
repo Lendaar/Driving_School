@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(x =>
 {
     x.Filters.Add<Driving_SchoolExceptionFilter>();
-});
+})
+  .AddControllersAsServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.GetSwaggerGen();
@@ -34,3 +35,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
