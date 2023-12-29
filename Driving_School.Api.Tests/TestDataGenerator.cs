@@ -259,9 +259,9 @@ namespace Driving_School.Api.Tests
             {
                 Id = Guid.NewGuid(),
                 EmployeeType = (Context.Contracts.Enums.EmployeeTypes)EmployeeTypes.Student,
-                Email = $"Email{Guid.NewGuid():N}",
+                Email = $"Email@Email.Email",
                 Experience = 0,
-                Number = $"Number{Guid.NewGuid():N}",
+                Number = $"Number-Number",
                 CreatedAt = DateTimeOffset.UtcNow,
                 CreatedBy = $"CreatedBy{Guid.NewGuid():N}",
                 UpdatedAt = DateTimeOffset.UtcNow,
